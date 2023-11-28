@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Card, Input, CardHeader, CardBody, CardFooter, Button, Link } from "@nextui-org/react";
 import { EyeFilledIcon } from "../../assets/icons/EyeFilledIcon";
 import { EyeFilledSlashIcon} from "../../assets/icons/EyeFilledSlashIcon";
 
 export default function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errMessage, setErrMessage] = useState('');
 
     const handleLogin = () => {
         axios.post('http://localhost:3001/login', { email, password })
-            .then(response => {console.log(response.data); setErrMessage('')})
+            .then(response => {
+                console.log(response.data); 
+                setErrMessage('');
+                navigate('/dashboard');
+            })
             .catch(error => {
                 if(error.response.status === 401) setErrMessage('Invalid email or password')
                 if(error.response.status === 400) {setErrMessage('Error while logging in'); console.log(error)}

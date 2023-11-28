@@ -5,6 +5,7 @@ import { ThemeProvider } from 'next-themes'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Dashboard from './Dasboard/'
 import ErrorPage from './Error'
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import './index.css'
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path='/dashboard' element={<Dashboard/>} />
         <Route path="*" element={<ErrorPage/>} />
       </Routes>
       </ThemeProvider>
