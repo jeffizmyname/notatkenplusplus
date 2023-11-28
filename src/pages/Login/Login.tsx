@@ -11,8 +11,11 @@ export default function Login() {
 
     const handleLogin = () => {
         axios.post('http://localhost:3001/login', { email, password })
-            .then(response => console.log(response.data))
-            .catch(error => setErrMessage('Error logging in'));
+            .then(response => {console.log(response.data); setErrMessage('')})
+            .catch(error => {
+                if(error.response.status === 401) setErrMessage('Invalid email or password')
+                if(error.response.status === 400) {setErrMessage('Error while logging in'); console.log(error)}
+            });
     };
 
     const [isVisible, setIsVisible] = React.useState(false);
@@ -20,7 +23,7 @@ export default function Login() {
 
     return (
         <div className='w-screen h-screen flex justify-center items-center'>
-            <Card isBlurred className="w-1/6 bg-default/80">
+            <Card isBlurred className="w-1/4 max-w-[400px] min-w-[300px] bg-default/80">
                 <CardHeader>
                     <p className="text-4xl w-full font-bold text-center">Log in</p>
                 </CardHeader>
@@ -29,7 +32,7 @@ export default function Login() {
                         size="md"
                         type="email"
                         label="Email"
-                        isInvalid={false}
+                        isInvalid={errMessage !== ""}
                         placeholder="you@example.com"
                         color="default"
                         onChange={(e) => setEmail(e.target.value)}>
@@ -38,7 +41,7 @@ export default function Login() {
                         size="md"
                         label="Password"
                         type={isVisible ? "text" : "password"}
-                        isInvalid={false}
+                        isInvalid={errMessage !== ""}
                         color="default"
                         onChange={(e) => setPassword(e.target.value)}
                         endContent={
@@ -52,7 +55,7 @@ export default function Login() {
                         }>
                         </Input>
                     <Button color="primary" variant='flat' onClick={handleLogin}>Login</Button>
-                    {errMessage && <p>{errMessage}</p>}
+                    {/* {errMessage && <p className='w-full text-center text-red-700'>{errMessage}</p>} */}
                 </CardBody>
                 <CardFooter>
                     <p className="text-small w-full text-center">No account? Regiester <Link href="/register" className='pointer-events-auto' underline="always">Here</Link></p>
