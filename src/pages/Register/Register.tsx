@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { HandleValidation } from '../../utils/validation'
 import { Card, Input, CardHeader, CardBody, CardFooter, Button, Link } from "@nextui-org/react";
 import { EyeFilledIcon } from "../../assets/icons/EyeFilledIcon";
 import { EyeFilledSlashIcon } from "../../assets/icons/EyeFilledSlashIcon";
@@ -37,7 +38,8 @@ export default function Login() {
         };
         axios.post('http://localhost:3001/register', userObject)
             .then(response => setMessage(response.data))
-            .catch(error => setMessage('Error registering user ' + error));
+            .catch(error => setMessage('Error registering user ' + error))
+            .finally(() => console.log(message));
     };
 
     function EyeButton() {
@@ -52,112 +54,6 @@ export default function Login() {
         )
     }
 
-    const handleValidation = () => {
-        const formFields = { ...fields };
-        const formErrors: Errors = {};
-        let formIsValid = true;
-
-        //Name
-        if (!formFields["name"]) {
-            formIsValid = false;
-            formErrors["name"] = "Cannot be empty";
-        }
-
-        if (formFields["name"] !== "") {
-            if (!formFields["name"]?.match(/^[a-zA-Z]+$/)) {
-                formIsValid = false;
-                formErrors["name"] = "Only letters";
-            }
-        }
-
-        //SurName
-        if (!formFields["surName"]) {
-            formIsValid = false;
-            formErrors["surName"] = "Cannot be empty";
-        }
-
-        if (typeof formFields["surName"] !== "undefined") {
-            if (!formFields["surName"].match(/^[a-zA-Z]+$/)) {
-                formIsValid = false;
-                formErrors["surName"] = "Only letters";
-            }
-        }
-
-        //Email
-        if (!formFields["email"]) {
-            formIsValid = false;
-            formErrors["email"] = "Cannot be empty";
-        }
-
-        if (formFields["email"] !== null) {
-            const lastAtPos = formFields["email"]?.lastIndexOf('@');
-            const lastDotPos = formFields["email"]?.lastIndexOf('.');
-
-            if(typeof lastAtPos === 'number' && typeof lastDotPos  === 'number') {
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && formFields["email"]?.indexOf('@@') == -1 && lastDotPos > 2 && (fields?.["email"]?.length ?? 0 - lastDotPos) > 2)) {
-                formIsValid = false;
-                formErrors["email"] = "Email is not valid";
-            }
-            }
-        }
-
-        //password
-        if(!formFields["password"]) {
-            formIsValid = false;
-            formErrors["password"] = "Cannot be empty";
-        } 
-
-        if (formFields["password"] !== null) {
-
-            if (formFields["password"]?.length && formFields["password"].length < 8) {
-                formIsValid = false;
-                formErrors["password"] = 'Password must be at least 8 characters long';
-            }
-    
-            // Regular expressions for additional criteria
-            const hasUpperCase = /[A-Z]/.test(formFields["password"] || 'def');
-            const hasLowerCase = /[a-z]/.test(formFields["password"] || 'def');
-            const hasDigit = /\d/.test(formFields["password"] || 'def');
-            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formFields["password"] || 'def');
-    
-            // Check additional criteria
-            if (!hasUpperCase) {
-                formIsValid = false;
-                formErrors["password"] = 'Password must contain at least one uppercase letter';
-            }
-    
-            if (!hasLowerCase) {
-                formIsValid = false;
-                formErrors["password"] = 'Password must contain at least one lowercase letter';
-            }
-    
-            if (!hasDigit) {
-                formIsValid = false;
-                formErrors["password"] = 'Password must contain at least one digit';
-            }
-    
-            if (!hasSpecialChar) {
-                formIsValid = false;
-                formErrors["password"] = 'Password must contain at least one special character';
-            }
-        }
-
-        if(formFields["passwordRep"] !== formFields["password"] && formFields["passwordRep"] != "") {
-            formIsValid = false;
-            formErrors["passwordRep"] = "The passwords dont match";
-        }
-        
-        if(!formFields["passwordRep"]) {
-            formIsValid = false;
-            formErrors["passwordRep"] = "Cannot be empty";
-        }
-        
-        //formErrors["passwordRep"] = validatePassword(formFields["passwordRep"]!)
-
-        setErrors(formErrors)
-        return formIsValid;
-    }
-
     const handleChange = (field: string, value: string) => {
         setFields({
             ...fields,
@@ -165,12 +61,20 @@ export default function Login() {
         })
     }
 
+    const handleRetrive = () => {
+        const formFields = { ...fields };
+        // Use the validateFields function from validationUtils
+        const formErrors = HandleValidation(formFields);
+
+        setErrors(formErrors);
+        return Object.keys(formErrors).length === 0;
+    }
+
     const contactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (handleValidation()) {
+        if (handleRetrive()) {
             console.log("Form submitted"  + JSON.stringify(errors) + JSON.stringify(fields));
             handleRegister();
-            console.log(message)
         } else {
             console.log("Form has errors."  + JSON.stringify(errors) + JSON.stringify(fields))
         }
