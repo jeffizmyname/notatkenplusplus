@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {NextUIProvider} from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react'
 import { ThemeProvider } from 'next-themes'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ErrorPage from './Error'
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import './index.css'
 
@@ -13,12 +14,13 @@ function App() {
 
   return (
     <NextUIProvider navigate={navigate}>
-      <ThemeProvider>
+      <ThemeProvider themes={['pink', 'red', 'blue', 'light', 'dark']}>
       {<></>}
       <Routes>
-        <Route path="/home" element={<Home/>} />
+        <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="*" element={<ErrorPage/>} />
       </Routes>
       </ThemeProvider>
     </NextUIProvider>
