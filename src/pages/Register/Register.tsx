@@ -28,7 +28,6 @@ export default function Login() {
     const [isVisible, setIsVisible] = React.useState(false);
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    //!fix register
     const handleRegister = () => {
         const userObject = {
             name: fields['name'],
@@ -36,7 +35,7 @@ export default function Login() {
             email: fields['email'],
             password: fields['password']
         };
-        axios.post('http://localhost:3001/register', {userObject.name, userObject.surName, userObject.email, userObject.password})
+        axios.post('http://localhost:3001/register', userObject)
             .then(response => setMessage(response.data))
             .catch(error => setMessage('Error registering user ' + error));
     };
@@ -64,8 +63,8 @@ export default function Login() {
             formErrors["name"] = "Cannot be empty";
         }
 
-        if (typeof formFields["name"] !== "undefined") {
-            if (!formFields["name"].match(/^[a-zA-Z]+$/)) {
+        if (formFields["name"] !== "") {
+            if (!formFields["name"]?.match(/^[a-zA-Z]+$/)) {
                 formIsValid = false;
                 formErrors["name"] = "Only letters";
             }
@@ -90,13 +89,15 @@ export default function Login() {
             formErrors["email"] = "Cannot be empty";
         }
 
-        if (typeof formFields["email"] !== "undefined") {
-            const lastAtPos = formFields["email"].lastIndexOf('@');
-            const lastDotPos = formFields["email"].lastIndexOf('.');
+        if (formFields["email"] !== null) {
+            const lastAtPos = formFields["email"]?.lastIndexOf('@');
+            const lastDotPos = formFields["email"]?.lastIndexOf('.');
 
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && formFields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields?.["email"]?.length ?? 0 - lastDotPos) > 2)) {
+            if(typeof lastAtPos === 'number' && typeof lastDotPos  === 'number') {
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && formFields["email"]?.indexOf('@@') == -1 && lastDotPos > 2 && (fields?.["email"]?.length ?? 0 - lastDotPos) > 2)) {
                 formIsValid = false;
                 formErrors["email"] = "Email is not valid";
+            }
             }
         }
 
@@ -104,44 +105,52 @@ export default function Login() {
         if(!formFields["password"]) {
             formIsValid = false;
             formErrors["password"] = "Cannot be empty";
-        } else {
-            if (formFields["password"].length < 8) {
-                return 'Password must be at least 8 characters long';
+        } 
+
+        if (formFields["password"] !== null) {
+
+            if (formFields["password"]?.length && formFields["password"].length < 8) {
+                formIsValid = false;
+                formErrors["password"] = 'Password must be at least 8 characters long';
             }
     
             // Regular expressions for additional criteria
-            const hasUpperCase = /[A-Z]/.test(formFields["password"]);
-            const hasLowerCase = /[a-z]/.test(formFields["password"]);
-            const hasDigit = /\d/.test(formFields["password"]);
-            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formFields["password"]);
+            const hasUpperCase = /[A-Z]/.test(formFields["password"] || 'def');
+            const hasLowerCase = /[a-z]/.test(formFields["password"] || 'def');
+            const hasDigit = /\d/.test(formFields["password"] || 'def');
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(formFields["password"] || 'def');
     
             // Check additional criteria
             if (!hasUpperCase) {
+                formIsValid = false;
                 formErrors["password"] = 'Password must contain at least one uppercase letter';
             }
     
             if (!hasLowerCase) {
+                formIsValid = false;
                 formErrors["password"] = 'Password must contain at least one lowercase letter';
             }
     
             if (!hasDigit) {
+                formIsValid = false;
                 formErrors["password"] = 'Password must contain at least one digit';
             }
     
             if (!hasSpecialChar) {
+                formIsValid = false;
                 formErrors["password"] = 'Password must contain at least one special character';
             }
+        }
+
+        if(formFields["passwordRep"] !== formFields["password"] && formFields["passwordRep"] != "") {
+            formIsValid = false;
+            formErrors["passwordRep"] = "The passwords dont match";
         }
         
         if(!formFields["passwordRep"]) {
             formIsValid = false;
             formErrors["passwordRep"] = "Cannot be empty";
-        } else {
-            if(formFields["passwordRep"] !== formFields["password"] && formFields["passwordRep"] != "") {
-                formErrors["passwordRep"] = "The passwords dont match";
-            }
         }
-
         
         //formErrors["passwordRep"] = validatePassword(formFields["passwordRep"]!)
 
@@ -225,7 +234,7 @@ export default function Login() {
                             onChange={e => handleChange('passwordRep', e.target.value)}
                             value={fields["passwordRep"]}>
                         </Input>
-                        <Button type="submit" color="primary" variant='flat' /*onClick={handleRegister}*/>Create account</Button>
+                        <Button type="submit" color="primary" variant='flat'>Create account</Button>
                     </CardBody>
                 </form>
                 <CardFooter>
