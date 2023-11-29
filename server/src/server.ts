@@ -2,9 +2,9 @@ import express, { Request, Response } from 'express';
 import mysql, { Connection, QueryError } from 'mysql2';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import crypto from 'crypto';
 
 const app = express();
-var crypto = require('crypto');
 const port = 3001;
 
 app.use(cors());
@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 app.post('/register', (req: Request, res: Response) => {
     const { name, surName, email, password } = req.body;
-    var passHash = crypto.createHash('md5').update(password).digest('hex');
+    const passHash = crypto.createHash('md5').update(password).digest('hex');
 
     const sql = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,7 +47,7 @@ app.post('/register', (req: Request, res: Response) => {
 app.post('/login', (req: Request, res: Response) => {
     const { email, password } = req.body;
 
-    var passHash = crypto.createHash('md5').update(password).digest('hex');
+    const passHash = crypto.createHash('md5').update(password).digest('hex');
 
     console.log(password + " " + passHash)
 
