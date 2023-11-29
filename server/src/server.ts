@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 const app = express();
+var crypto = require('crypto');
 const port = 3001;
 
 app.use(cors());
@@ -27,10 +28,11 @@ app.use(bodyParser.json());
 
 app.post('/register', (req: Request, res: Response) => {
     const { name, surName, email, password } = req.body;
+    var passHash = crypto.createHash('md5').update(password).digest('hex');
 
     const sql = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    connection.query(sql, [name, surName, email, password], (err: QueryError | null, results) => {
+    connection.query(sql, [name, surName, email, passHash], (err: QueryError | null, results) => {
         if (err) {
             console.error('Error registering user: ', err);
             res.status(500).send('Error registering user');
@@ -45,8 +47,12 @@ app.post('/register', (req: Request, res: Response) => {
 app.post('/login', (req: Request, res: Response) => {
     const { email, password } = req.body;
 
+    var passHash = crypto.createHash('md5').update(password).digest('hex');
+
+    console.log(password + " " + passHash)
+
     const sql = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    connection.query(sql, [email, password], (err: QueryError | null, results) => {
+    connection.query(sql, [email, passHash], (err: QueryError | null, results) => {
         if (err) {
             console.error('Error logging in: ', err);
             res.status(500).send('Error logging in');
