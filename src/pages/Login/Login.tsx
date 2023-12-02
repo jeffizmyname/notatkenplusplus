@@ -14,7 +14,9 @@ export default function Login() {
     const handleLogin = () => {
         axios.post('http://localhost:3001/login', { email, password })
             .then(response => {
-                console.log(response.data); 
+                console.log(response.data);
+                sessionStorage.setItem("loggedIn", "true")
+                //sessionStorage.setItem("userData", `{email: ${email}}`)
                 setErrMessage('');
                 navigate('/dashboard');
             })

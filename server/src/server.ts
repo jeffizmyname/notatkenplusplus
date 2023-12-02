@@ -30,17 +30,35 @@ app.post('/register', (req: Request, res: Response) => {
     const { name, surName, email, password } = req.body;
     const passHash = crypto.createHash('md5').update(password).digest('hex');
 
+
+    const check = 'SELECT COUNT(*) as Count FROM users WHERE email = ?'
     const sql = 'INSERT INTO users (name, surname, email, password) VALUES (?, ?, ?, ?)';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    connection.query(sql, [name, surName, email, passHash], (err: QueryError | null, results) => {
+    connection.query(check, email, (err: QueryError | null, results, fields) => {
         if (err) {
-            console.error('Error registering user: ', err);
-            res.status(500).send('Error registering user');
+            console.error('Error querying the database:', err.message);
         } else {
-            console.log('User registered successfully');
-            res.status(200).send('User registered successfully');
+            console.log("results " + JSON.stringify(results))
+            const countValue = Array.isArray(results) && results.length > 0 && 'Count' in results[0] ? results[0].Count : undefined;
+            // eslint-disable-next-line no-constant-condition
+            if (countValue === 0) {
+                res.status(200)
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                connection.query(sql, [name, surName, email, passHash], (err: QueryError | null, results) => {
+                    if (err) {
+                        console.error('Error registering user: ', err);
+                        res.status(500).send('Error registering user');
+                    } else {
+                        console.log('User registered successfully');
+                        res.status(200).send('User registered successfully');
+                    }
+                });
+            } else {
+                res.status(500).send("email in database");
+            }
         }
     });
+
 });
 
 // Login endpoint

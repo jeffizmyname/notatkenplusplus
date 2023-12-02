@@ -38,7 +38,15 @@ export default function Login() {
         };
         axios.post('http://localhost:3001/register', userObject)
             .then(response => setMessage(response.data))
-            .catch(error => setMessage('Error registering user ' + error))
+            .catch(error => {
+                if(error.response.status === 500) {
+                    setMessage('Error registering user email in databse ' + error.message); 
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        email: 'This email is already in use',
+                    }));
+                }
+            })
             .finally(() => console.log(message));
     };
 
