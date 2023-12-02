@@ -1,6 +1,7 @@
-import { Button, Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
-import { ThemeChanger } from "../../components/ThemeChagner";
+import {Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
 import React from "react";
+import Account from "./Account";
+import NoAccount from "./NoAccount"
 
 //pan tu mnei react routera uzyj zerby mne to działało no tak ten tengo wiesz 
 
@@ -42,19 +43,7 @@ export default function NavBar() {
                 </NavbarItem>
             </NavbarContent>
 
-            <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href="/login">Login</Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button as={Link} color="primary" variant="flat" href="/register">
-                        Sign Up
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <ThemeChanger />
-                </NavbarItem>
-            </NavbarContent>
+            {sessionStorage.getItem("loggedIn") !== "true" ? <NoAccount/> : <Account/>}
 
             <NavbarMenu>
                 {menuItems.map((item, index) => (
