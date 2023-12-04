@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Card, Input, CardHeader, CardBody, CardFooter, Button, Link } from "@nextui-org/react";
 import { EyeFilledIcon } from "../../assets/icons/EyeFilledIcon";
-import { EyeFilledSlashIcon} from "../../assets/icons/EyeFilledSlashIcon";
+import { EyeFilledSlashIcon } from "../../assets/icons/EyeFilledSlashIcon";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -16,13 +16,13 @@ export default function Login() {
             .then(response => {
                 console.log(response.data);
                 sessionStorage.setItem("loggedIn", "true")
-                //sessionStorage.setItem("userData", `{email: ${email}}`)
+                sessionStorage.setItem("userData", `{"email": "${email}"}`)
                 setErrMessage('');
                 navigate('/dashboard');
             })
             .catch(error => {
-                if(error.response.status === 401) setErrMessage('Invalid email or password')
-                if(error.response.status === 400) {setErrMessage('Error while logging in'); console.log(error)}
+                if (error.response.status === 401) setErrMessage('Invalid email or password')
+                if (error.response.status === 400) { setErrMessage('Error while logging in'); console.log(error) }
             });
     };
 
@@ -61,7 +61,7 @@ export default function Login() {
                                 )}
                             </button>
                         }>
-                        </Input>
+                    </Input>
                     <Button color="primary" variant='flat' onClick={handleLogin}>Login</Button>
                     {/* {errMessage && <p className='w-full text-center text-red-700'>{errMessage}</p>} */}
                 </CardBody>

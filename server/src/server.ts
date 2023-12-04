@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import mysql, { Connection, QueryError } from 'mysql2';
+import mysql, { Connection, QueryError, RowDataPacket } from 'mysql2';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import crypto from 'crypto';
@@ -25,6 +25,24 @@ connection.connect((err: QueryError | null) => {
 });
 
 app.use(bodyParser.json());
+
+app.post('/getUserData', (req: Request, res: Response) => {
+    const sql = 'SELECT id, name, surname, email FROM users WHERE email = ?'
+    const {email} = req.body;
+
+    connection.query(sql, email, (err: QueryError | null, results: RowDataPacket[]) => {
+        if (err) {
+            console.error('Error:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        //console.log('SQL Query:', connection.format(sql, email));
+        res.json({ user: results[0] });
+    })
+})
 
 app.post('/register', (req: Request, res: Response) => {
     const { name, surName, email, password } = req.body;
