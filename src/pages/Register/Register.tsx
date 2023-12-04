@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { HandleValidation } from '../../utils/validation'
 import { Card, Input, CardHeader, CardBody, CardFooter, Button, Link } from "@nextui-org/react";
 import { EyeFilledIcon } from "../../assets/icons/EyeFilledIcon";
@@ -22,6 +23,7 @@ interface Errors {
 }
 
 export default function Login() {
+    const navigate = useNavigate();
     const [fields, setFields] = useState<Fields>({});
     const [errors, setErrors] = useState<Errors>({});
     const [message, setMessage] = useState('');
@@ -37,7 +39,10 @@ export default function Login() {
             password: fields['password']
         };
         axios.post('http://localhost:3001/register', userObject)
-            .then(response => setMessage(response.data))
+            .then(response => {
+                setMessage(response.data)
+                navigate('/dashboard')
+            })
             .catch(error => {
                 if(error.response.status === 500) {
                     setMessage('Error registering user email in databse ' + error.message); 
