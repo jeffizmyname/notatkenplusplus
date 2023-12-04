@@ -34,7 +34,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <NextUIProvider>
       <BrowserRouter>
-        <div className="w-screen h-screen bg-gradient-to-tr from-primary-100 to-primary-300">
+        <div className="w-screen h-screen text-foreground bg-gradient-to-t from-primary-100 to-default-0 to-50%">
           <App/>
         </div>
       </BrowserRouter>

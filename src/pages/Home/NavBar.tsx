@@ -14,6 +14,7 @@ export default function NavBar() {
     ];
     return (
         <Navbar
+            isBordered
             shouldHideOnScroll
             isMenuOpen={isMenuOpen}
             onMenuOpenChange={setIsMenuOpen}
