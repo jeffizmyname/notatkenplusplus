@@ -2,10 +2,14 @@ import React, { useEffect } from 'react';
 import { Button } from '@nextui-org/react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import LeftBar from './LeftBar';
+import NavBar from './NavBar';
+import Content from './Content';
 
 export default function Dashboard() {
     const navigate = useNavigate();
-    const data = sessionStorage.getItem("userData")
+    const data = JSON.parse(sessionStorage.getItem("userData")!)
+    console.log(data.name)
 
     useEffect(() => {
         // Check if the user is not logged in, then navigate to the login page
@@ -34,17 +38,24 @@ export default function Dashboard() {
 
 // Render the component content
 return (
-    <>
-        <p>tu kiedyś będzie strona, przysięgam</p>
-        <Button onClick={() => {
-            sessionStorage.setItem("loggedIn", "false");
-            navigate('/login');
-        }}>Log out</Button>
-        <Button onClick={() => {
-            userData()
-        }}>
-            get data
-        </Button>
-    </>
+    <div className='w-screen h-screen bg-zinc-900 overflow-x-hidden'>
+        <NavBar/>
+        <div className='flex h-full'>
+            <LeftBar/>
+            <Content/>
+        </div>
+
+    </div>
 );
 }
+
+{/* <p>tu kiedyś będzie strona, przysięgam</p>
+<Button onClick={() => {
+    sessionStorage.setItem("loggedIn", "false");
+    navigate('/login');
+}}>Log out</Button>
+<Button onClick={() => {
+    userData()
+}}>
+    get data
+</Button> */}
