@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
     const navigate = useNavigate();
+    const data = sessionStorage.getItem("userData")
+    let email = "";
+    if (data !== null) {
+        const jsonData = JSON.parse(data);
+        email = jsonData.email
+    }
 
     return (
         <NavbarContent as="div" justify="end">
@@ -25,7 +31,7 @@ export default function Account() {
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-14 gap-2">
                         <p className="font-semibold">Signed in as</p>
-                        <p className="font-semibold">zoey@example.com</p>
+                        <p className="font-semibold">{email}</p>
                     </DropdownItem>
                     <DropdownItem key="settings">My Settings</DropdownItem>
                     <DropdownItem key="team_settings">Team Settings</DropdownItem>
