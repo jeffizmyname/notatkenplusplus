@@ -31,7 +31,7 @@ export default function Login() {
                 });
 
                 setErrMessage('');
-                navigate('/dashboard');
+                navigate('/dashboard/MyThings');
             })
             .catch(error => {
                 if (error.response.status === 401) setErrMessage('Invalid email or password')
