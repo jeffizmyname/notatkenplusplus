@@ -1,6 +1,7 @@
 import { Button } from '@nextui-org/react';
 import { ReactPainter } from 'react-painter';
 
+//chyba napisać bedzie treba samemu
 
 export default function Paint() {
 
@@ -10,6 +11,7 @@ export default function Paint() {
         <ReactPainter
         width={size.width}
         height={size.height}
+        initialColor='#d7a3e1'
         onSave={blob => console.log(blob)}
         render={({ triggerSave, canvas }) => (
           <div>
