@@ -15,6 +15,10 @@ import Paint from './pages/Dasboard/Options/Paint/Paint'
 import ToDo from './pages/Dasboard/Options/ToDo'
 import Chart from './pages/Dasboard/Options/Chart'
 import Calendar from './pages/Dasboard/Options/Calendar'
+import BlankFiles from './pages/Dasboard/FilesSites/BlankFiles/BlankFiles'
+import PaintFiles from './pages/Dasboard/FilesSites/PaintFiles/PaintFiles'
+import ToDoFiles from './pages/Dasboard/FilesSites/ToDoFiles/ToDoFiles'
+import ChartFiles from './pages/Dasboard/FilesSites/ChartFiles/ChartFiles'
 
 function App() {
   const navigate = useNavigate();
@@ -30,10 +34,10 @@ function App() {
         <Route path='/dashboard' element={<Dashboard/>} >
           <Route path='MyThings' index element={<Files/>}/>
           <Route path="Calendar" element={<Calendar/>} />
-          <Route path='Blank' element={<Blank/>}/>
-          <Route path='Paint' element={<Paint/>}/>
-          <Route path='ToDo' element={<ToDo/>}/>
-          <Route path='Chart' element={<Chart/>}/>
+          <Route path='BlankFiles' element={<BlankFiles/>}/>
+          <Route path='PaintFiles' element={<PaintFiles/>}/>
+          <Route path='ToDoFiles' element={<ToDoFiles/>}/>
+          <Route path='ChartFiles' element={<ChartFiles/>}/>
           <Route path="*" element={<ErrorPage/>} />
         </Route>
         <Route path="*" element={<ErrorPage/>} />
