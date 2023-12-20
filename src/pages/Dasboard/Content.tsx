@@ -21,7 +21,7 @@ export default function Content() {
     //console.log(width + " " + height)
 
     return(
-        <div className="w-[85%] bg-background/50" ref={ref}>
+        <div className="w-[85%] bg-background/50 h-[2000px]" ref={ref}>
             <Outlet />
         </div>
     )
