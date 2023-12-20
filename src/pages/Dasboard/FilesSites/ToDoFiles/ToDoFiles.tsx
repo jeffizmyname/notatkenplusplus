@@ -9,6 +9,7 @@ export default function ToDoFiles() {
         <div>
           <p>Dzisiaj</p>
           <div className="flex flex-row gap-5">
+            <CardElement type="new"/>
             <CardElement type="TODO"/>
             <CardElement type="TODO"/>
             <CardElement type="TODO"/>
