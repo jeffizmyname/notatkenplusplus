@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "target": "es6",
+        "lib": ["es6", "ES2020", "ES2021" , "DOM", "DOM.Iterable"],
         "module": "commonjs",
         "strict": true,
         "esModuleInterop": true,
