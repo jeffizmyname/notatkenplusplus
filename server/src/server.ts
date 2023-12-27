@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 app.post('/getUserData', (req: Request, res: Response) => {
     const sql = 'SELECT id, name, surname, email FROM users WHERE email = ?'
-    const {email} = req.body;
+    const { email } = req.body;
 
     connection.query(sql, email, (err: QueryError | null, results: RowDataPacket[]) => {
         if (err) {
@@ -105,7 +105,50 @@ app.post('/login', (req: Request, res: Response) => {
 });
 
 
-app.post('/saveToDO', (req: Request, res: Response) => { });
+// app.post('/saveToDo', (req: Request, res: Response) => { 
+
+// });
+
+app.get('/todos/:userId', (req: Request, res: Response) => {
+    const userId = req.params.userId;
+    connection.query('SELECT * FROM ToDoS WHERE user_id = ?', userId, (err: QueryError | null, results: RowDataPacket[]) => {
+        console.log('SQL Query:', connection.format('SELECT * FROM ToDoS WHERE user_id = ?', [userId]));
+        if(err) {
+            console.error("error sending todo")
+            res.status(500).send(err)
+        } else {
+            res.status(200).json({userData: results})
+        }
+    });
+});
+
+app.post('/todos', (req: Request, res: Response) => {
+    const { user_id, Name, Author, Description} = req.body;
+    const sql = 'INSERT INTO ToDoS (user_id, Name, Author, Description) VALUES (?, ?, ?, ?)';
+    connection.query(sql, [user_id, Name, Author, Description], (err: QueryError | null) => {
+        console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
+        if(err) {
+            console.error("cant create TODO " + err);
+            res.status(500).send('Error creating TODO');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+});
+
+app.post('/todos/update', (req: Request, res: Response) => {
+    const { id, user_id, Name, Author, Description, Data} = req.body;
+    const sql = 'UPDATE ToDoS SET user_id=?, Name=?, Author=?, Description=?, Data=? WHERE id = ?';
+    connection.query(sql, [user_id, Name, Author, Description, Data, id], (err: QueryError | null) => {
+        console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
+        if(err) {
+            console.error("cant create TODO " + err);
+            res.status(500).send('Error creating TODO');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
