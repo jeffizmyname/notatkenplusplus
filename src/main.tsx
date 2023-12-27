@@ -32,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
         <Route path='/dashboard' element={<Dashboard/>} >
+          <Route path='ToDo/:todoID' element={<ToDo/>}/>
           <Route path='MyThings' index element={<Files/>}/>
           <Route path="Calendar" element={<Calendar/>} />
           <Route path='BlankFiles' element={<BlankFiles/>}/>
