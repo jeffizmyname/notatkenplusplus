@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import CardElement from "../../../../components/CardElement";
-import { getUserTODOS } from "../../../../utils/TODOfunctions";
 import { getId } from "../../../../utils/userData";
+import { getElements } from "../../../../utils/saveLoad";
 
 interface TodoItem {
+  id: number;
   Name: string;
   Author: string;
   Description: string;
@@ -15,7 +16,7 @@ export default function ToDoFiles() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const userData = await getUserTODOS(getId()!);
+        const userData = await getElements("todo", getId()!)
         setUserTODOs(userData);
       } catch (error) {
         console.error('Error:', error);
@@ -29,15 +30,18 @@ export default function ToDoFiles() {
 
 
   return (
-    <div>
+    <div className="m-4 mr-0">
       <div>
-        <p>Dzisiaj</p>
-        <div className="flex flex-row gap-5">
-        <CardElement type="new" ListName="" Author="" Desc="" />
+        <p
+        className="m-2 text-xl">Dzisiaj</p>
+        <div className="flex flex-row gap-5 overflow-y-scroll">
+        <CardElement type="new" category="todo" fileId={0} ListName="" Author="" Desc="" />
           {userTODOs.map((todo, index) => (
             <CardElement
               key={index}
-              type="TODO"
+              type="todo"
+              category="todo"
+              fileId = {todo.id}
               ListName={todo.Name} 
               Author={todo.Author}
               Desc={todo.Description} 
