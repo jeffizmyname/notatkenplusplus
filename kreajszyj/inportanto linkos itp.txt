@@ -1,7 +1,7 @@
 https://dev.to/pccprint/10-react-rich-text-editors-1hh5 - edytory paczki cos uzyje z tego
 https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 
-1.zapisuj i oczytuj tekst 
+1.zapisuj i oczytuj tekst  OK
 2.napraw checkboxy w TODO i dodaj kategorie
 3.kalendarz + dodawnie do niego TODO i wydarzeń
 4.udostepnianie po kodzie
@@ -12,7 +12,14 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 9.całe malownie trzeba zrobic
 10.jakies ustawienia podstawowe
 11.stona głowna + logo + stopka
+    -dlacemumy
+`   -łatwe udostepnianie i mam kod
+    -stopka kontakt
 12.ogarnąć wyswietlanie plikow dla kazdego typu pain blank itp
+    -w połowie dobrze
+13.menu zapisz eksportuj do notatek
+14.napraw usatwnia zeby dalo sie otworzyc z strony głównej
+15timestamp tworzenia edutowanie sortowanie po nazwie dacie 
 
 ewentuqlnie react dnd do zabawy
 
