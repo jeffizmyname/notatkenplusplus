@@ -1,5 +1,20 @@
 https://dev.to/pccprint/10-react-rich-text-editors-1hh5 - edytory paczki cos uzyje z tego
 https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 
+1.zapisuj i oczytuj tekst 
+2.napraw checkboxy w TODO i dodaj kategorie
+3.kalendarz + dodawnie do niego TODO i wydarzeń
+4.udostepnianie po kodzie
+5.tworzenie wykresow
+6.Prezcohowyanie plików
+7.upload avatara
+8.napraw dark mode lightmode lub usuń poprstu
+9.całe malownie trzeba zrobic
+10.jakies ustawienia podstawowe
+11.stona głowna + logo + stopka
+
+ewentuqlnie react dnd do zabawy
 
 pobieraj user data zawsze nie tylko przy login
+
+1 unique share code for each todo
