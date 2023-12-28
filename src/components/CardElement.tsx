@@ -1,10 +1,14 @@
 import { Card, CardFooter, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
-import { createTODO } from "../utils/TODOfunctions";
 import { useState } from "react";
 import { getId } from "../utils/userData";
+import { useNavigate } from 'react-router-dom';
+import { create } from "../utils/saveLoad";
+
 
 type Props = {
-    type: string
+    type: string,
+    category: string,
+    fileId: number,
     ListName: string,
     Author: string,
     Desc: string
@@ -18,6 +22,8 @@ interface todoForm {
 
 
 export default function CardElement(props: Props) {
+    const navigate = useNavigate();
+
     const [fields, setFields] = useState<todoForm>({});
     const { isOpen, onOpen, onClose } = useDisclosure();
     const CardType = props.type;
@@ -29,13 +35,17 @@ export default function CardElement(props: Props) {
         })
     }
 
+    const handleOpen = () => {
+        navigate(`/dashboard/${props.category}/${props.fileId}`)
+    }
+
     return (
         <>
             <Card
                 isFooterBlurred
                 isPressable
                 onPress={onOpen}
-                className="w-[200px] h-[200px]">
+                className="min-w-[200px] h-[200px]">
 
                 {CardType !== "new" ? (
                     <>
@@ -55,9 +65,9 @@ export default function CardElement(props: Props) {
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                     {CardType !== "new" ? (
-                        <ModalDefaultContent onClose={onClose} name={props.ListName} author={props.Author} desc={props.Desc}/>
+                        <ModalDefaultContent handleOpen={handleOpen} onClose={onClose} name={props.ListName} author={props.Author} desc={props.Desc}/>
                     ) : (
-                        <ModalNewContent onClose={onClose} handleChange={handleChange} fields={fields} />
+                        <ModalNewContent onClose={onClose} handleChange={handleChange} fields={fields} category={props.category}/>
                     )}
                 </ModalContent>
             </Modal>
@@ -66,13 +76,14 @@ export default function CardElement(props: Props) {
 }
 
 type ModalDefaultContentProps = {
+    handleOpen: () => void;
     onClose: () => void;
     name: string;  // Updated from ListName to name
     author: string;  // Updated from Author to author
     desc: string;  // Updated from Desc to desc
 };
 
-const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ onClose, name, author, desc }) => (
+const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handleOpen, onClose, name, author, desc }) => (
     <>
         <ModalHeader className="flex flex-col gap-1">{name}</ModalHeader>
         <ModalBody>
@@ -86,7 +97,7 @@ const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ onClose, name
             <Button color="primary" variant="light" onPress={onClose}>
                 Share
             </Button>
-            <Button color="primary" onPress={onClose}>
+            <Button color="primary" onPress={handleOpen}>
                 Open
             </Button>
         </ModalFooter>
@@ -94,7 +105,7 @@ const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ onClose, name
 );
 
 
-const ModalNewContent: React.FC<{ onClose: () => void; handleChange: (field: string, value: string) => void; fields: todoForm }> = ({ onClose, handleChange, fields }) => (
+const ModalNewContent: React.FC<{ onClose: () => void; handleChange: (field: string, value: string) => void; fields: todoForm; category: string }> = ({ onClose, handleChange, fields, category }) => (
     <>
         <ModalHeader className="flex flex-col gap-1">Nowa Lista</ModalHeader>
         <ModalBody>
@@ -110,7 +121,7 @@ const ModalNewContent: React.FC<{ onClose: () => void; handleChange: (field: str
             <Button color="danger" variant="light" onPress={onClose}>
                 Close
             </Button>
-            <Button color="primary" onPress={() => createTODO(getId()!, fields.ListName || '', fields.Author || '', fields.Desc || '')}>
+            <Button color="primary" onPress={() => create(category, getId()!, fields.ListName || '', fields.Author || '', fields.Desc || '')}>
                 Create
             </Button>
         </ModalFooter>
