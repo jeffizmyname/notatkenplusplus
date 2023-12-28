@@ -10,7 +10,7 @@ import ErrorPage from './Error'
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import './index.css'
 import Files from './pages/Dasboard/Options/Files'
-import Blank from './pages/Dasboard/Options/Blank'
+import Blank from './pages/Dasboard/Options/Blank/Blank'
 import Paint from './pages/Dasboard/Options/Paint/Paint'
 import ToDo from './pages/Dasboard/Options/ToDo'
 import Chart from './pages/Dasboard/Options/Chart'
@@ -33,6 +33,7 @@ function App() {
         <Route path="/register" element={<Register/>} />
         <Route path='/dashboard' element={<Dashboard/>} >
           <Route path='ToDo/:todoID' element={<ToDo/>}/>
+          <Route path="Blank" element={<Blank/>}/>
           <Route path='MyThings' index element={<Files/>}/>
           <Route path="Calendar" element={<Calendar/>} />
           <Route path='BlankFiles' element={<BlankFiles/>}/>
