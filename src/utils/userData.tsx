@@ -1,8 +1,23 @@
+import axios from "axios";
+
 interface UserData {
     id: number;
     name: string;
     surname: string;
     email: string;
+}
+
+export function prepData(email: string) {
+    axios.post('http://localhost:3001/getUserData', { email })
+    .then(response => {
+        sessionStorage.setItem("userData", JSON.stringify(response.data.user))
+        console.clear();
+        console.log(sessionStorage.getItem("userData"));
+    })
+    .catch(error => {
+        console.clear();
+        console.log(error);
+    });
 }
 
 const getData = (): UserData | null => {

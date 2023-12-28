@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Card, Input, CardHeader, CardBody, CardFooter, Button, Link } from "@nextui-org/react";
 import { EyeFilledIcon } from "../../assets/icons/EyeFilledIcon";
 import { EyeFilledSlashIcon } from "../../assets/icons/EyeFilledSlashIcon";
+import { prepData } from '../../utils/userData';
 
 export default function Login() {
     const navigate = useNavigate();
@@ -17,18 +18,7 @@ export default function Login() {
                 console.log(response.data);
                 sessionStorage.setItem("loggedIn", "true")
                 sessionStorage.setItem("userData", `{"email": "${email}"}`)
-
-                axios.post('http://localhost:3001/getUserData', { email })
-                .then(response => {
-                    sessionStorage.setItem("userData", JSON.stringify(response.data.user))
-                    console.clear();
-                    console.log(sessionStorage.getItem("userData"));
-                })
-                .catch(error => {
-                    console.clear();
-                    console.log(error);
-                });
-
+                prepData(email)
                 setErrMessage('');
                 navigate('/dashboard/MyThings');
             })
