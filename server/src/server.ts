@@ -109,7 +109,7 @@ app.post('/login', (req: Request, res: Response) => {
 
 // });
 
-app.get('/todos/:userId', (req: Request, res: Response) => {
+app.get('/todo/:userId', (req: Request, res: Response) => {
     const userId = req.params.userId;
     connection.query('SELECT * FROM ToDoS WHERE user_id = ?', userId, (err: QueryError | null, results: RowDataPacket[]) => {
         console.log('SQL Query:', connection.format('SELECT * FROM ToDoS WHERE user_id = ?', [userId]));
@@ -122,10 +122,11 @@ app.get('/todos/:userId', (req: Request, res: Response) => {
     });
 });
 
-app.post('/todos', (req: Request, res: Response) => {
+app.post('/todo', (req: Request, res: Response) => {
+    const starterData = '[{"isDone": false, "task": ""}]'
     const { user_id, Name, Author, Description} = req.body;
-    const sql = 'INSERT INTO ToDoS (user_id, Name, Author, Description) VALUES (?, ?, ?, ?)';
-    connection.query(sql, [user_id, Name, Author, Description], (err: QueryError | null) => {
+    const sql = 'INSERT INTO ToDoS (user_id, Name, Author, Description, Data) VALUES (?, ?, ?, ?, ?)';
+    connection.query(sql, [user_id, Name, Author, Description, starterData], (err: QueryError | null) => {
         console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
         if(err) {
             console.error("cant create TODO " + err);
@@ -136,7 +137,9 @@ app.post('/todos', (req: Request, res: Response) => {
     });
 });
 
-app.post('/todos/update', (req: Request, res: Response) => {
+//?sprobowac pozniej to wszytko jako jedno zapytanie napisac dla kazdego typu /:co/update
+
+app.post('/todo/update', (req: Request, res: Response) => {
     const { id, user_id, Name, Author, Description, Data} = req.body;
     const sql = 'UPDATE ToDoS SET user_id=?, Name=?, Author=?, Description=?, Data=? WHERE id = ?';
     connection.query(sql, [user_id, Name, Author, Description, Data, id], (err: QueryError | null) => {
@@ -144,6 +147,48 @@ app.post('/todos/update', (req: Request, res: Response) => {
         if(err) {
             console.error("cant create TODO " + err);
             res.status(500).send('Error creating TODO');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+})
+
+app.get('/blank/:userId', (req: Request, res: Response) => {
+    const userId = req.params.userId;
+    connection.query('SELECT * FROM notes WHERE user_id = ?', userId, (err: QueryError | null, results: RowDataPacket[]) => {
+        //console.log('SQL Query:', connection.format('SELECT * FROM ToDoS WHERE user_id = ?', [userId]));
+        if(err) {
+            console.error("error sending todo")
+            res.status(500).send(err)
+        } else {
+            res.status(200).json({userData: results})
+        }
+    });
+})
+
+app.post('/blank', (req: Request, res: Response) => {
+    const starterData = '[{"insert": "twój tekst..."}]'
+    const { user_id, Name, Author, Description} = req.body;
+    const sql = 'INSERT INTO notes (user_id, Name, Author, Description, Data) VALUES (?, ?, ?, ?, ?)';
+    connection.query(sql, [user_id, Name, Author, Description, starterData], (err: QueryError | null) => {
+        //console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
+        if(err) {
+            console.error("cant create note " + err);
+            res.status(500).send('Error creating note');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+});
+
+app.post('/blank/update', (req: Request, res: Response) => {
+    const { id, user_id, Name, Author, Description, Data} = req.body;
+    const sql = 'UPDATE notes SET user_id=?, Name=?, Author=?, Description=?, Data=? WHERE id = ?';
+    connection.query(sql, [user_id, Name, Author, Description, Data, id], (err: QueryError | null) => {
+        //console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
+        if(err) {
+            console.error("cant update Notes " + err);
+            res.status(500).send('Error creating note');
         } else {
             res.status(200).json({ success: true });
         }
