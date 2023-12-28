@@ -12,6 +12,7 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 9.całe malownie trzeba zrobic
 10.jakies ustawienia podstawowe
 11.stona głowna + logo + stopka
+12.ogarnąć wyswietlanie plikow dla kazdego typu pain blank itp
 
 ewentuqlnie react dnd do zabawy
 
