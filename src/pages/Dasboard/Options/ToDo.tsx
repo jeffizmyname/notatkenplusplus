@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getUserTODOS } from '../../../utils/TODOfunctions';
 import { getId } from '../../../utils/userData';
 import { useParams } from 'react-router-dom';
 import { Button, Checkbox, CheckboxGroup, Input } from '@nextui-org/react';
-import axios from 'axios';
+import { getElements, handleSave } from '../../../utils/saveLoad';
 
 interface Todo {
     id: number;
@@ -22,15 +21,15 @@ function ToDo() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const userData = await getUserTODOS(getId()!);
+                const userData = await getElements("todo", getId()!)
                 const resultObject = userData.find((item: Todo) => item.id === Number(TODOid.todoID));
                 setTodoData(resultObject);
+                console.log(userData)
                 if (resultObject && resultObject.Data) {
                     const unescapedString = resultObject.Data.replace(/\\"/g, '"');
                     const jsonArray = JSON.parse(unescapedString);
                     setEntries(jsonArray);
                 }
-                console.log(entries)
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -59,23 +58,9 @@ function ToDo() {
     const handleDelete = (index: number) => {
         setEntries((prevEntries) => prevEntries.filter((entry, i) => i !== index));
     };
-
-    const handleSave = async () => {
-        try {
-            const jsonData = JSON.stringify(entries);
-            await axios.post('http://localhost:3001/todos/update', {
-                id: todoData?.id,
-                user_id: getId()!,
-                Name: todoData?.Name,
-                Author: todoData?.Author,
-                Description: todoData?.Description,
-                Data: jsonData,
-            });
-
-            console.log('Todo updated successfully');
-        } catch (error) {
-            console.error('Error updating todo:', error);
-        }
+    //!zamien na funkcje z saveLoad
+    const HandleSave = () => {
+        handleSave("todo", entries, todoData);
     };
 
 
@@ -109,7 +94,7 @@ function ToDo() {
             </div>
             <div>
                 <Button onClick={addField}>Nowy wpis</Button>
-                <Button onClick={handleSave}>Zapisz</Button>
+                <Button onClick={HandleSave}>Zapisz</Button>
             </div>
         </div>
     );
