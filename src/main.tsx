@@ -19,6 +19,7 @@ import BlankFiles from './pages/Dasboard/FilesSites/BlankFiles/BlankFiles'
 import PaintFiles from './pages/Dasboard/FilesSites/PaintFiles/PaintFiles'
 import ToDoFiles from './pages/Dasboard/FilesSites/ToDoFiles/ToDoFiles'
 import ChartFiles from './pages/Dasboard/FilesSites/ChartFiles/ChartFiles'
+import Settings from './pages/Dasboard/Settings/Settings'
 
 function App() {
   const navigate = useNavigate();
@@ -32,11 +33,13 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
         <Route path='/dashboard' element={<Dashboard/>} >
+          <Route path="Settings" element={<Settings/>} />
           <Route path='ToDo/:todoID' element={<ToDo/>}/>
-          <Route path="Blank" element={<Blank/>}/>
+          <Route path="Blank/:blankID" element={<Blank/>}/>
+          {/* <Route path="Chart" element={<Chart/>}/> */}
           <Route path='MyThings' index element={<Files/>}/>
           <Route path="Calendar" element={<Calendar/>} />
-          <Route path='BlankFiles' element={<BlankFiles/>}/>
+          <Route path='BlankFiles' element={<BlankFiles/>}/>  
           <Route path='PaintFiles' element={<PaintFiles/>}/>
           <Route path='ToDoFiles' element={<ToDoFiles/>}/>
           <Route path='ChartFiles' element={<ChartFiles/>}/>
