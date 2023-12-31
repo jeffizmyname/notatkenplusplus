@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getId } from '../../../utils/userData';
 import { useParams } from 'react-router-dom';
-import { Button, Checkbox, CheckboxGroup, Input } from '@nextui-org/react';
+import { Button, Checkbox, Input } from '@nextui-org/react';
 import { getElements, handleSave } from '../../../utils/saveLoad';
 
 interface Todo {
@@ -78,7 +78,6 @@ function ToDo() {
             </div>
             <div>
                 <p>wpisy</p>
-                <CheckboxGroup>
                     {entries.map((entry, index) => (
                         <div key={index} className='w-[250px] flex row'>
                             <Checkbox isSelected={entry.isDone}
@@ -90,7 +89,6 @@ function ToDo() {
                             <Button onClick={() => handleDelete(index)}>Delete</Button>
                         </div>
                     ))}
-                </CheckboxGroup>
             </div>
             <div>
                 <Button onClick={addField}>Nowy wpis</Button>
