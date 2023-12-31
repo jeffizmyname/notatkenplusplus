@@ -2,9 +2,9 @@ https://dev.to/pccprint/10-react-rich-text-editors-1hh5 - edytory paczki cos uzy
 https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 
 1.zapisuj i oczytuj tekst  OK
-2.napraw checkboxy w TODO i dodaj kategorie
+2.napraw checkboxy w TODO OK (i dodaj kategorie)
 3.kalendarz + dodawnie do niego TODO i wydarzeń
-4.udostepnianie po kodzie
+4.udostepnianie po kodzie zaczyanm
 5.tworzenie wykresow
 6.Prezcohowyanie plików
 7.upload avatara
