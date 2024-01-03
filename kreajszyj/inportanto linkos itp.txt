@@ -3,7 +3,9 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 
 1.zapisuj i oczytuj tekst  OK
 2.napraw checkboxy w TODO OK (i dodaj kategorie)
-3.kalendarz + dodawnie do niego TODO i wydarzeń
+3.kalendarz
+    -dodawnie do niego TODO
+    -wydarzeń
 4.udostepnianie po kodzie zaczyanm
 5.tworzenie wykresow
 6.Prezcohowyanie plików
@@ -13,7 +15,7 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 10.jakies ustawienia podstawowe
 11.stona głowna + logo + stopka
     -dlacemumy
-`   -łatwe udostepnianie i mam kod
+`   -łatwe udostepnianie i mam kod OK
     -stopka kontakt
 12.ogarnąć wyswietlanie plikow dla kazdego typu pain blank itp
     -w połowie dobrze
