@@ -37,6 +37,7 @@ export default function Account() {
                         <p className="font-semibold">Signed in as</p>
                         <p className="font-semibold">{email}</p>
                     </DropdownItem>
+                    {/*onclick jest jest na glownej stronie to /dashboard/settings */}
                     <DropdownItem key="settings"
                     onClick={() => {navigate("settings")}}>Settings</DropdownItem>
                     <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
