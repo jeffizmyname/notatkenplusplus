@@ -195,6 +195,20 @@ app.post('/blank/update', (req: Request, res: Response) => {
     });
 })
 
+
+app.post('/settings/newsletter', (req: Request, res: Response) => {
+    const userId = req.body;
+    const sql = 'UPDATE users SET newsletter=? WHERE id = ?';
+    connection.query(sql, [userId], (err: QueryError | null) => {
+        if(err) {
+            console.error('setting didnt chagne ' + err);
+            res.status(500).send('error chagning newsletter');
+        } else {
+            res.status(200).json({response: res})
+        }
+    })
+})
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
