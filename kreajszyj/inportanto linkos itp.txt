@@ -13,6 +13,8 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 8.napraw dark mode lightmode lub usuń poprstu
 9.całe malownie trzeba zrobic
 10.jakies ustawienia podstawowe
+    -style OK
+    -funkcojnalność
 11.stona głowna + logo + stopka
     -dlacemumy
 `   -łatwe udostepnianie i mam kod OK
@@ -22,6 +24,8 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 13.menu zapisz eksportuj do notatek
 14.napraw usatwnia zeby dalo sie otworzyc z strony głównej
 15timestamp tworzenia edutowanie sortowanie po nazwie dacie 
+16.dokonc ustawienia newsletter
+17.responsywnosc strona dashbard
 
 ewentuqlnie react dnd do zabawy
 
