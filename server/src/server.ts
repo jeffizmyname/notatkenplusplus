@@ -197,14 +197,15 @@ app.post('/blank/update', (req: Request, res: Response) => {
 
 
 app.post('/settings/newsletter', (req: Request, res: Response) => {
-    const userId = req.body;
-    const sql = 'UPDATE users SET newsletter=? WHERE id = ?';
-    connection.query(sql, [userId], (err: QueryError | null) => {
+    const { isSelected, id } = req.body;
+    const sql = 'UPDATE users SET newsletter= ? WHERE id = ?';
+    connection.query(sql, [isSelected, id], (err: QueryError | null) => {
+        console.log('SQL Query:', connection.format(sql, [isSelected, id]));
         if(err) {
             console.error('setting didnt chagne ' + err);
             res.status(500).send('error chagning newsletter');
         } else {
-            res.status(200).json({response: res})
+            res.status(200).json({success: true})
         }
     })
 })

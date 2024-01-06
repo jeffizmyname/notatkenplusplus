@@ -1,19 +1,25 @@
 import { Card, CardBody, Checkbox, Button } from "@nextui-org/react";
 import axios from "axios";
 import { getId } from "../../../utils/userData";
+import { useState } from "react";
 
 export default function Newsletter() {
-
-    const handleNewsletter = (state) => {
-        axios.post("localhost:3000/settings/newsletter", state, getId())
+    const [isSelected, setIsSelected] = useState(false);
+    
+    const handleNewsletter = () => {
+        const id = getId();
+        console.log(isSelected + " " + id)
+        axios.post("http://localhost:3001/settings/newsletter", {isSelected, id})
+        .catch(err => console.log(err))
     }
 
-    //button waljue przekasz 
+
     return (
-        <Card className="w-[500px] h-[65px]">
+        <Card className="h-[65px]">
         <CardBody className="flex flex-row justify-between">
-            <Checkbox>Chce otrymywać newslettera z nowościami</Checkbox>
-            <Button color="primary" variant="flat" onClick={() => handleNewsletter()}>Zapisz</Button>
+            <Checkbox
+            isSelected={isSelected} onValueChange={setIsSelected}>Chce otrymywać newslettera z nowościami</Checkbox>
+            <Button color="primary" variant="flat" onClick={handleNewsletter}>Zapisz</Button>
         </CardBody>
         </Card>
     )
