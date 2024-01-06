@@ -1,4 +1,3 @@
-import { Card } from "@nextui-org/card";
 import { Outlet } from "react-router-dom";
 import {useLayoutEffect, useRef, useState} from 'react';
 
@@ -21,7 +20,7 @@ export default function Content() {
     //console.log(width + " " + height)
 
     return(
-        <div className="w-[85%] bg-background/50 h-[2000px]" ref={ref}>
+        <div className="w-full lg:w-[85%] bg-background/50 h-[2000px]" ref={ref}>
             <Outlet />
         </div>
     )

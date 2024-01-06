@@ -4,7 +4,7 @@ export default function EditAccount() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     return (
-        <Card className="w-[500px]">
+        <Card className="">
         <CardHeader>
             <p>Edytuj konto</p>
         </CardHeader>

@@ -4,7 +4,7 @@ export default function DeleteAccount() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     return (
-        <Card className="w-[500px] h-[180px]">
+        <Card className="h-[180px]">
         <CardHeader>
             <p>Usuń konto</p>
         </CardHeader>
