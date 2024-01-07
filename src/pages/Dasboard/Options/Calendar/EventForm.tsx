@@ -34,7 +34,7 @@ export default function EventForm(props: Props) {
         handleChange("type", "event")
         handleChange("date", format(props.today, "yyyy-MM-dd"))
         console.log(fields)
-        axios.post("http://localhost:3001/calendar/addTask", {id, string})
+        axios.post("http://192.168.100.245:3001/calendar/addTask", {id, string})
         .catch(err => console.log(err))
     }
 
