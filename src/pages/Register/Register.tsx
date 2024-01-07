@@ -76,7 +76,7 @@ export default function Login() {
 
     const handleRetrive = () => {
         const formFields = { ...fields };
-        // Use the validateFields function from validationUtils
+        
         const formErrors = HandleValidation(formFields);
 
         setErrors(formErrors);
