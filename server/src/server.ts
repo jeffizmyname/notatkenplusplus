@@ -237,9 +237,9 @@ app.post('/calendar/addTask', (req: Request, res: Response) => {
 })
 
 app.post('/calendar/getTask', (req: Request, res: Response) => {
-    const {id} = req.body
-    const sql = 'SELECT Data FROM calendarevents WHERE user_id = ?'
-    connection.query(sql, [id], (err: QueryError | null, results: RowDataPacket[]) => {
+    const {id, date} = req.body
+    const sql = 'SELECT Data FROM calendarevents WHERE user_id = ? AND JSON_EXTRACT(data, \'$.date\') = ?'
+    connection.query(sql, [id, date], (err: QueryError | null, results: RowDataPacket[]) => {
         if(err) {
             console.error("cant send task data " + err);
             res.status(500).send("error sending task data")  
