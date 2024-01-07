@@ -38,7 +38,7 @@ export default function Login() {
             email: fields['email'],
             password: fields['password']
         };
-        axios.post('http://localhost:3001/register', userObject)
+        axios.post('http://192.168.100.245:3001/register', userObject)
             .then(response => {
                 setMessage(response.data)
                 navigate('/dashboard')

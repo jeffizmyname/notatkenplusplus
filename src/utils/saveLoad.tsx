@@ -8,7 +8,7 @@ export function create(type: string, userId: number, Name: string, Author: strin
         Author: Author,
         Description: Desc,
     }
-    axios.post(`http://localhost:3001/${type}`, prepData)
+    axios.post(`http://192.168.100.245:3001/${type}`, prepData)
     .then(() => {
         alert(`${type} created`)
     })
@@ -17,7 +17,7 @@ export function create(type: string, userId: number, Name: string, Author: strin
 
 export async function getElements(type: string, userId: number) {
     try {
-        const response = await axios.get(`http://localhost:3001/${type}/${userId}`)
+        const response = await axios.get(`http://192.168.100.245:3001/${type}/${userId}`)
         return response.data.userData
     } catch (error) {
         console.error('Error fetching user todos:', error);
@@ -46,7 +46,7 @@ interface Note {
 export async function handleSave(type: string, json: unknown, Data: TypeData | Note | null ) {
     try {
         const jsonData = JSON.stringify(json);
-        await axios.post(`http://localhost:3001/${type}/update`, {
+        await axios.post(`http://192.168.100.245:3001/${type}/update`, {
             id: Data?.id,
             user_id: getId()!,
             Name: Data?.Name,

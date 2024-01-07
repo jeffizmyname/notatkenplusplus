@@ -13,7 +13,7 @@ export default function Login() {
     const [errMessage, setErrMessage] = useState('');
 
     const handleLogin = () => {
-        axios.post('http://localhost:3001/login', { email, password })
+        axios.post('http://192.168.100.245:3001/login', { email, password })
             .then(response => {
                 console.log(response.data);
                 sessionStorage.setItem("loggedIn", "true")

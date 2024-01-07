@@ -8,7 +8,7 @@ interface UserData {
 }
 
 export function prepData(email: string) {
-    axios.post('http://localhost:3001/getUserData', { email })
+    axios.post('http://192.168.100.245:3001/getUserData', { email })
     .then(response => {
         sessionStorage.setItem("userData", JSON.stringify(response.data.user))
         console.clear();

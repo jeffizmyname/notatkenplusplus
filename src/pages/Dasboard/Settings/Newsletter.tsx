@@ -9,12 +9,12 @@ export default function Newsletter() {
 
     
     const handleNewsletter = () => {
-        axios.post("http://localhost:3001/settings/newsletterChange", {isSelected, id})
+        axios.post("http://192.168.100.245:3001/settings/newsletterChange", {isSelected, id})
         .catch(err => console.log(err))
     }
 
     const reciveNewsletter = () => {
-        axios.post("http://localhost:3001/settings/newsletter", {id})
+        axios.post("http://192.168.100.245:3001/settings/newsletter", {id})
         .then(response => setIsSelected(response.data.res[0].newsletter))
         .catch(err => console.log(err))
     }

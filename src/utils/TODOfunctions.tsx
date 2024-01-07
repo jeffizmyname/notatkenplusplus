@@ -7,7 +7,7 @@ export function createTODO(userId: number, todoName: string, todoAuthor: string,
         Author: todoAuthor,
         Description: todoDesc,
     }
-    axios.post("http://localhost:3001/todos", todoData)
+    axios.post("http://192.168.100.245:3001/todos", todoData)
     .then(() => {
         alert("TODO Created")
     })
@@ -16,7 +16,7 @@ export function createTODO(userId: number, todoName: string, todoAuthor: string,
 
 export async function getUserTODOS(userId: number) {
     try {
-        const response = await axios.get(`http://localhost:3001/todos/${userId}`);
+        const response = await axios.get(`http://192.168.100.245:3001/todos/${userId}`);
         return response.data.userData;
     } catch (error) {
         console.error('Error fetching user todos:', error);
