@@ -24,7 +24,7 @@ export default function Dashboard() {
         const email = jsonData.email
         console.log(jsonData.email);
 
-        axios.post('http://localhost:3001/getUserData', { email })
+        axios.post('http://192.168.100.245:3001/getUserData', { email })
             .then(response => {
                 console.clear();
                 console.log(JSON.stringify(response));
@@ -40,7 +40,7 @@ export default function Dashboard() {
 return (
     <div className='w-screen h-screen bg-zinc-900 overflow-x-hidden'>
         <NavBar/>
-        <div className='flex h-full'>
+        <div className='flex h-[calc(100%-64px)]'>
             <LeftBar/>
             <Content/>
         </div>
