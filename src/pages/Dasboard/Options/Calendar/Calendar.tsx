@@ -10,6 +10,7 @@ import { LeftArrow } from '../../../../assets/icons/LeftArrow';
 interface CalendarProps {
     currentDate: Date;
     onDateClick: (date: Date) => void;
+    style: string;
 }
 
 const hardcodedDaysArray = [
@@ -27,7 +28,7 @@ const hardcodedDaysArray = [
     { prev: 3, next: 7 }, // December
 ];
 
-const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick }) => {
+export const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick, style }) => {
     const [currentMonth, setCurrentMonth] = useState<Date>(startOfMonth(currentDate));
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -60,7 +61,7 @@ const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick }) => {
     });
 
     return (
-        <div className='m-5'>
+        <div className={`m-5 mt-2 lg:h-[${style === "normal" ? "300px" : "100%"}]`}>
             <div className='mb-2'>
                 <ButtonGroup className='w-full'>
                     <Button isIconOnly radius='sm' onClick={handlePrevMonth}>
@@ -83,14 +84,17 @@ const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick }) => {
                 <span>S</span>
                 <span>N</span>
             </div>
-            <div className='grid grid-cols-7 grid-rows-6 h-fit w-full
+            <div className='grid grid-cols-7 grid-rows-6 h-full w-full
             [&>*:nth-child(1)]:rounded-tl-lg
             [&>*:nth-child(7)]:rounded-tr-lg
             [&>*:nth-child(36)]:rounded-bl-lg
             [&>*:nth-child(42)]:rounded-br-lg'>
                 {daysInGrid.map((date) => (
                     <div 
-                        className={`relative lg:w-[60px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default
+                        className={`${
+                            style === "normal" ? 'relative lg:w-[60px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default' :
+                            style === 'big' ? "relative h-[50px]" 
+                            : ""}
                         ${isToday(date) ? 'text-primary font-bold' : ''} 
                         ${date.getMonth() !== currentMonth.getMonth() ? 'bg-default-50' : ''}
                         ${selectedDate && date.toISOString() === selectedDate.toISOString() ? 'before:z-[-1] before:absolute before:w-7 before:h-7 before:content-[\'\'] before:rounded-full before:bg-default' : ''}`}
@@ -137,7 +141,8 @@ export default function Calendar() {
         <div className='flex lg:flex-row flex-col w-full h-full'>
             <CCalendar 
             currentDate={selectedDate || new Date()} 
-            onDateClick={handleDateClick} />
+            onDateClick={handleDateClick} 
+            style='normal'/>
             <EventDetails 
             currentDate={selectedDate} 
             onPrevDayClick={handlePrevDayClick}
