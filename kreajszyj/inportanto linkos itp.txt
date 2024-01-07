@@ -4,8 +4,10 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 1.zapisuj i oczytuj tekst  OK
 2.napraw checkboxy w TODO OK (i dodaj kategorie)
 3.kalendarz
+    -wydarzeń OK tylko kolory dorobic
+
     -dodawnie do niego TODO
-    -wydarzeń
+
 4.udostepnianie po kodzie zaczyanm
 5.tworzenie wykresow
 6.Prezcohowyanie plików
