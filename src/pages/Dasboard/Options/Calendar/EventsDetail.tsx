@@ -33,7 +33,7 @@ export default function EventDetails(props: Props) {
     const getDayEvents = (date: string) => {
         const id = getId();
         axios.post("http://192.168.100.245:3001/calendar/getTask", { id, date })
-            .then((response) => setEventData(response.data.res.map((item: any) => JSON.parse(item.Data))))
+            .then((response) => setEventData(response.data.res.map((item: { Data: string; }) => JSON.parse(item.Data))))
             .catch((err) => console.log(err));
     };
 
