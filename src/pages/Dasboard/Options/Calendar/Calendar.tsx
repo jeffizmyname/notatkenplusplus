@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format, startOfMonth, addMonths, subMonths, eachDayOfInterval, isToday, addDays } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { Button, ButtonGroup, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@nextui-org/react';
@@ -29,8 +29,11 @@ const hardcodedDaysArray = [
 
 const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick }) => {
     const [currentMonth, setCurrentMonth] = useState<Date>(startOfMonth(currentDate));
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
+    useEffect(() => {
+        setSelectedDate(new Date());
+    }, []);
 
     const handlePrevMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1));
@@ -80,14 +83,14 @@ const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick }) => {
                 <span>S</span>
                 <span>N</span>
             </div>
-            <div className='grid grid-cols-7 grid-rows-6 w-full h-fit 
+            <div className='grid grid-cols-7 grid-rows-6 h-fit w-full
             [&>*:nth-child(1)]:rounded-tl-lg
             [&>*:nth-child(7)]:rounded-tr-lg
             [&>*:nth-child(36)]:rounded-bl-lg
             [&>*:nth-child(42)]:rounded-br-lg'>
                 {daysInGrid.map((date) => (
                     <div 
-                        className={`lg:w-[60px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default
+                        className={`relative lg:w-[60px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default
                         ${isToday(date) ? 'text-primary font-bold' : ''} 
                         ${date.getMonth() !== currentMonth.getMonth() ? 'bg-default-50' : ''}
                         ${selectedDate && date.toISOString() === selectedDate.toISOString() ? 'before:z-[-1] before:absolute before:w-7 before:h-7 before:content-[\'\'] before:rounded-full before:bg-default' : ''}`}
@@ -110,17 +113,35 @@ export default function Calendar() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [modalSelection, setModalSelection] = useState("select");
 
-
     const handleDateClick = (date: Date) => {
         setSelectedDate(date);
         setModalSelection('select')
-        onOpen()
+        //onOpen()
+    };
+
+    const handlePrevDayClick = () => {
+        if (selectedDate) {
+            const prevDay = addDays(selectedDate, -1);
+            setSelectedDate(prevDay)
+        }
+    };
+
+    const handleNextDayClick = () => {
+        if (selectedDate) {
+            const nextDay = addDays(selectedDate, 1);
+            setSelectedDate(nextDay)
+        }
     };
 
     return (
-        <div className='flex lg:flex-row flex-col '>
-            <CCalendar currentDate={selectedDate || new Date()} onDateClick={handleDateClick} />
-            <EventDetails currentDate={selectedDate} />
+        <div className='flex lg:flex-row flex-col w-full h-full'>
+            <CCalendar 
+            currentDate={selectedDate || new Date()} 
+            onDateClick={handleDateClick} />
+            <EventDetails 
+            currentDate={selectedDate} 
+            onPrevDayClick={handlePrevDayClick}
+            onNextDayClick={handleNextDayClick}/>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {modalSelection === 'select' && (
