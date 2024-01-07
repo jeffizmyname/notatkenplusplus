@@ -3,16 +3,16 @@ import {useLayoutEffect, useRef, useState} from 'react';
 
 export default function Content() {
 
-    const ref = useRef<any>(null);
+    const ref = useRef<unknown>(null);
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
     useLayoutEffect(() => {
-        if(ref.current !== null) {
-            setWidth(ref.current.offsetWidth);
-            setHeight(ref.current.offsetHeight);
-        }
+        // if(ref.current !== undefined && ref.current !== null) {
+        //     setWidth(ref.current.offsetWidth);
+        //     setHeight(ref.current.offsetHeight);
+        // }
     }, []);
 
     sessionStorage.setItem("paintWH", `{"width": ${width}, "height": ${height}}`)
