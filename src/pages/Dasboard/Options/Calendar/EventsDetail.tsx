@@ -12,6 +12,7 @@ interface Props {
     currentDate: Date | null;
     onPrevDayClick: () => void;
     onNextDayClick: () => void;
+    onOpen: () => void;
 }
 
 interface EventData {
@@ -151,12 +152,12 @@ export default function EventDetails(props: Props) {
                                 : "nie wybrano daty"}
                         </p>
                     </div>
-                    <div>
-                    <ButtonGroup className='w-full'>
+                    <div className="flex lg:flex-row md:flex-row sm:flex-row xs:flex-col gap-2">
+                    <ButtonGroup className='w-fit'>
                         <Button isIconOnly radius='sm' onClick={props.onPrevDayClick}>
                             <LeftArrow className='scale-50' />
                         </Button>
-                        <span className='max-h-[40px] py-[7px] border-1 border-default bg-default flex justify-center items-center lg:w-fit overflow-hidden sm:w-[100px] xs:w-[100px]'>
+                        <span className='px-2 max-h-[40px] py-[7px] border-1 border-default bg-default flex justify-center items-center lg:w-fit overflow-hidden sm:w-[100px] xs:w-[100px]'>
                             {props.currentDate !== null
                                 ? formatDistanceToNow(props.currentDate, { locale: pl, addSuffix: true})
                                 : "brak"}
@@ -165,6 +166,7 @@ export default function EventDetails(props: Props) {
                             <RightArrow className='scale-50' />
                         </Button>
                     </ButtonGroup>
+                    <Button variant="solid" color="primary" radius="sm" onClick={props.onOpen}>Dodaj wydarzenie</Button>
                     </div>
                 </CardHeader>
                 <CardBody className="h-[800px] overflow-scroll flex flex-row">

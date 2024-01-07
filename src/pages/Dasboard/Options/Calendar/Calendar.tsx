@@ -141,7 +141,8 @@ export default function Calendar() {
             <EventDetails 
             currentDate={selectedDate} 
             onPrevDayClick={handlePrevDayClick}
-            onNextDayClick={handleNextDayClick}/>
+            onNextDayClick={handleNextDayClick}
+            onOpen={() => {setModalSelection('select'); onOpen();}}/>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {modalSelection === 'select' && (
@@ -153,7 +154,7 @@ export default function Calendar() {
                             </ModalBody>
                         </>
                     )}
-                    {modalSelection === 'zadanie' && (
+                    {modalSelection === 'zadanie' && selectedDate !== null && (
                         <>
                             <EventForm today={selectedDate!} />
                         </>
