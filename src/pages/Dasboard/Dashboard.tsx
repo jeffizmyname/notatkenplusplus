@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { Button } from '@nextui-org/react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import LeftBar from './LeftBar';
 import NavBar from './NavBar';
 import Content from './Content';
@@ -18,23 +16,23 @@ export default function Dashboard() {
         }
     }, [navigate]);
 
-    const userData = () => { 
-    if (data !== null) {
-        const jsonData = JSON.parse(data);
-        const email = jsonData.email
-        console.log(jsonData.email);
+//     const userData = () => { 
+//     if (data !== null) {
+//         const jsonData = JSON.parse(data);
+//         const email = jsonData.email
+//         console.log(jsonData.email);
 
-        axios.post('http://192.168.100.245:3001/getUserData', { email })
-            .then(response => {
-                console.clear();
-                console.log(JSON.stringify(response));
-            })
-            .catch(error => {
-                console.clear();
-                console.log(error);
-            });
-    }
-}
+//         axios.post('http://192.168.100.245:3001/getUserData', { email })
+//             .then(response => {
+//                 console.clear();
+//                 console.log(JSON.stringify(response));
+//             })
+//             .catch(error => {
+//                 console.clear();
+//                 console.log(error);
+//             });
+//     }
+// }
 
 // Render the component content
 return (
