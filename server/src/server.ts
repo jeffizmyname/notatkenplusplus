@@ -196,7 +196,7 @@ app.post('/blank/update', (req: Request, res: Response) => {
 })
 
 
-app.post('/settings/newsletter', (req: Request, res: Response) => {
+app.post('/settings/newsletterChange', (req: Request, res: Response) => {
     const { isSelected, id } = req.body;
     const sql = 'UPDATE users SET newsletter= ? WHERE id = ?';
     connection.query(sql, [isSelected, id], (err: QueryError | null) => {
@@ -204,6 +204,32 @@ app.post('/settings/newsletter', (req: Request, res: Response) => {
         if(err) {
             console.error('setting didnt chagne ' + err);
             res.status(500).send('error chagning newsletter');
+        } else {
+            res.status(200).json({success: true})
+        }
+    })
+})
+
+app.post('/settings/newsletter', (req: Request, res: Response) => {
+    const {id} = req.body;
+    const sql = 'SELECT newsletter FROM users WHERE id=?';
+    connection.query(sql, [id], (err: QueryError | null, results: RowDataPacket[]) => {
+        if(err) {
+            console.error("coundt send newsletter status " + err);
+            res.status(500).send("error in reciving newsletter")
+        } else {
+            res.status(200).json({success: true, res: results})
+        }
+    })
+})
+
+app.post('/calendar/addTask', (req: Request, res: Response) => {
+    const {id, string} = req.body;
+    const sql = 'INSERT INTO calendarevents (user_id, Data) VALUES (?, ?)'
+    connection.query(sql, [id, string], (err: QueryError | null) => {
+        if(err) {
+            console.error("cant create calednar event " + err);
+            res.status(500).send("error creating calerndar event")  
         } else {
             res.status(200).json({success: true})
         }
