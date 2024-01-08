@@ -8,6 +8,7 @@ interface TodoItem {
   Name: string;
   Author: string;
   Description: string;
+  CreationDate: string
 }
 
 export default function ToDoFiles() {
@@ -35,7 +36,7 @@ export default function ToDoFiles() {
         <p
         className="m-2 text-xl">Dzisiaj</p>
         <div className="flex flex-row gap-5 overflow-y-scroll">
-        <CardElement type="new" category="todo" fileId={0} ListName="" Author="" Desc="" />
+        <CardElement type="new" category="todo" fileId={0} ListName="" Author="" Desc="" CreationDate=""/>
           {userTODOs.map((todo, index) => (
             <CardElement
               key={index}
@@ -44,7 +45,8 @@ export default function ToDoFiles() {
               fileId = {todo.id}
               ListName={todo.Name} 
               Author={todo.Author}
-              Desc={todo.Description} 
+              Desc={todo.Description}
+              CreationDate={todo.CreationDate} 
             />
           ))}
         </div>
