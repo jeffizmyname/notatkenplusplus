@@ -2,6 +2,7 @@ import Newsletter from "./Newsletter";
 import EditAccount from "./EditAccount";
 import DeleteAccount from "./DeleteAccount";
 import Banner from "./Banner";
+import EditProfilePic from "./EditProfilePic";
 
 export default function Settings() {
 
@@ -10,8 +11,11 @@ export default function Settings() {
             {/* <p>zmiana avatara / wysylaj emaile z nowosciami / zmiana hasla / zmiani emaila /  usun konto</p> */}
             <Banner/>
             <EditAccount/>
-            <Newsletter/>
-            <DeleteAccount/>
+            <div>
+                <Newsletter/>
+                <DeleteAccount/>
+            </div>
+            <EditProfilePic/>
         </div>
     )
 }
