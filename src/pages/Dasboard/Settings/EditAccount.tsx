@@ -8,12 +8,13 @@ export default function EditAccount() {
         <CardHeader>
             <p>Edytuj konto</p>
         </CardHeader>
-        <CardBody>
+        <CardBody className="flex flex-col gap-3">
+            <Input
+            label="imie"/>
+            <Input
+            label="nazwisko"/>
             <Input
             label="email"/>
-            <Input
-            type="file"
-            label="avatar"/>
         </CardBody>
         <CardFooter className="flex justify-between">
             <Link onClick={onOpen} underline="always">Chce zmienić hasło</Link>
