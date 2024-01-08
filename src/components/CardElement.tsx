@@ -1,4 +1,4 @@
-import { Card, CardFooter, Image, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
+import { Card, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea, CardBody } from "@nextui-org/react";
 import { useState } from "react";
 import { getId } from "../utils/userData";
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,8 @@ type Props = {
     fileId: number,
     ListName: string,
     Author: string,
-    Desc: string
+    Desc: string,
+    CreationDate: string
 }
 
 interface todoForm {
@@ -28,6 +29,23 @@ export default function CardElement(props: Props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const CardType = props.type;
 
+    function parseDateString(dateString: string) {
+        const date = new Date(dateString);
+
+        const result = {
+            year: date.getUTCFullYear(),
+            month: date.getUTCMonth() + 1, // Months are zero-indexed
+            day: date.getUTCDate(),
+            hours: date.getUTCHours(),
+            minutes: date.getUTCMinutes(),
+            seconds: date.getUTCSeconds()
+        };
+
+        return result;
+    }
+
+    const parsedDate = parseDateString(props.CreationDate);
+
     const handleChange = (field: string, value: string) => {
         setFields({
             ...fields,
@@ -42,32 +60,21 @@ export default function CardElement(props: Props) {
     return (
         <>
             <Card
-                isFooterBlurred
                 isPressable
                 onPress={onOpen}
-                className="min-w-[200px] h-[200px]">
-
-                {CardType !== "new" ? (
-                    <>
-                        <Image
-                            alt="preview test"
-                            src="https://picsum.photos/200"
-                            width={200}
-                        />
-                        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
-                            {props.ListName}
-                        </CardFooter>
-                    </>
-                ) : (
-                    <Button className="w-[20px] h-[20px]">New</Button>
-                )}
+                className="min-w-[200px] h-[50px]">
+                    {CardType !== "new" ?
+                <CardBody>{props.ListName} autor {props.Author} data utworzenia {parsedDate.year} {parsedDate.month} {parsedDate.day} {parsedDate.hours}:{parsedDate.minutes}:{parsedDate.seconds}</CardBody>
+            : <CardBody>
+                utwórz nową notatke
+                </CardBody>}
             </Card>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                     {CardType !== "new" ? (
-                        <ModalDefaultContent handleOpen={handleOpen} onClose={onClose} name={props.ListName} author={props.Author} desc={props.Desc}/>
+                        <ModalDefaultContent handleOpen={handleOpen} onClose={onClose} name={props.ListName} author={props.Author} desc={props.Desc} />
                     ) : (
-                        <ModalNewContent onClose={onClose} handleChange={handleChange} fields={fields} category={props.category}/>
+                        <ModalNewContent onClose={onClose} handleChange={handleChange} fields={fields} category={props.category} />
                     )}
                 </ModalContent>
             </Modal>
@@ -78,9 +85,9 @@ export default function CardElement(props: Props) {
 type ModalDefaultContentProps = {
     handleOpen: () => void;
     onClose: () => void;
-    name: string;  // Updated from ListName to name
-    author: string;  // Updated from Author to author
-    desc: string;  // Updated from Desc to desc
+    name: string;
+    author: string;
+    desc: string;
 };
 
 const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handleOpen, onClose, name, author, desc }) => (

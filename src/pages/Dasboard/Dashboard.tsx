@@ -36,9 +36,9 @@ export default function Dashboard() {
 
 // Render the component content
 return (
-    <div className='w-screen h-screen bg-zinc-900 overflow-x-hidden'>
+    <div className='w-screen h-fit bg-zinc-900 overflow-x-hidden'>
         <NavBar/>
-        <div className='flex h-[calc(100%-64px)]'>
+        <div className='flex h-[calc(100vh)]'>
             <LeftBar/>
             <Content/>
         </div>
