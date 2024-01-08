@@ -1,14 +1,36 @@
 import express, { Request, Response } from 'express';
+
+//importy
 import mysql, { Connection, QueryError, RowDataPacket } from 'mysql2';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import crypto from 'crypto';
+import multer from 'multer';
 
+//expres and port deklaracja
 const app = express();
 const port = 3001;
 
+//filtruje pliki na avatara
+const fileFilter = (req: Request, file: Express.Multer.File, callback: multer.FileFilterCallback) => {
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+    if (allowedMimeTypes.includes(file.mimetype)) {
+        callback(null, true);
+    } else {
+        callback(new Error('Invalid file type. Only image files are allowed.'));
+    }
+};
+
+//storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage, fileFilter});
+
+
+
 app.use(cors());
 
+//połaczenie z baza danych
 const connection: Connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -26,6 +48,12 @@ connection.connect((err: QueryError | null) => {
 
 app.use(bodyParser.json());
 
+//********** */
+//*ZAPYTANIA
+//********** */
+
+
+//pobiera informacje o uzytkowniku
 app.post('/getUserData', (req: Request, res: Response) => {
     const sql = 'SELECT id, name, surname, email FROM users WHERE email = ?'
     const { email } = req.body;
@@ -44,6 +72,7 @@ app.post('/getUserData', (req: Request, res: Response) => {
     })
 })
 
+//zajmuje sie rejestracja
 app.post('/register', (req: Request, res: Response) => {
     const { name, surName, email, password } = req.body;
     const passHash = crypto.createHash('md5').update(password).digest('hex');
@@ -79,7 +108,7 @@ app.post('/register', (req: Request, res: Response) => {
 
 });
 
-// Login endpoint
+//zajmuje sie logowaniem
 app.post('/login', (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -105,30 +134,29 @@ app.post('/login', (req: Request, res: Response) => {
 });
 
 
-// app.post('/saveToDo', (req: Request, res: Response) => { 
-
-// });
-
+//wyszukiwane todo
 app.get('/todo/:userId', (req: Request, res: Response) => {
     const userId = req.params.userId;
     connection.query('SELECT * FROM ToDoS WHERE user_id = ?', userId, (err: QueryError | null, results: RowDataPacket[]) => {
         console.log('SQL Query:', connection.format('SELECT * FROM ToDoS WHERE user_id = ?', [userId]));
-        if(err) {
+        if (err) {
             console.error("error sending todo")
             res.status(500).send(err)
         } else {
-            res.status(200).json({userData: results})
+            res.status(200).json({ userData: results })
         }
     });
 });
 
+
+//nowe todo
 app.post('/todo', (req: Request, res: Response) => {
     const starterData = '[{"isDone": false, "task": ""}]'
-    const { user_id, Name, Author, Description} = req.body;
+    const { user_id, Name, Author, Description } = req.body;
     const sql = 'INSERT INTO ToDoS (user_id, Name, Author, Description, Data) VALUES (?, ?, ?, ?, ?)';
     connection.query(sql, [user_id, Name, Author, Description, starterData], (err: QueryError | null) => {
         console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
-        if(err) {
+        if (err) {
             console.error("cant create TODO " + err);
             res.status(500).send('Error creating TODO');
         } else {
@@ -137,14 +165,14 @@ app.post('/todo', (req: Request, res: Response) => {
     });
 });
 
-//?sprobowac pozniej to wszytko jako jedno zapytanie napisac dla kazdego typu /:co/update
 
+//update todo
 app.post('/todo/update', (req: Request, res: Response) => {
-    const { id, user_id, Name, Author, Description, Data} = req.body;
+    const { id, user_id, Name, Author, Description, Data } = req.body;
     const sql = 'UPDATE ToDoS SET user_id=?, Name=?, Author=?, Description=?, Data=? WHERE id = ?';
     connection.query(sql, [user_id, Name, Author, Description, Data, id], (err: QueryError | null) => {
         console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
-        if(err) {
+        if (err) {
             console.error("cant create TODO " + err);
             res.status(500).send('Error creating TODO');
         } else {
@@ -153,26 +181,28 @@ app.post('/todo/update', (req: Request, res: Response) => {
     });
 })
 
+//wszukiwanie notatek
 app.get('/blank/:userId', (req: Request, res: Response) => {
     const userId = req.params.userId;
     connection.query('SELECT * FROM notes WHERE user_id = ?', userId, (err: QueryError | null, results: RowDataPacket[]) => {
         //console.log('SQL Query:', connection.format('SELECT * FROM ToDoS WHERE user_id = ?', [userId]));
-        if(err) {
+        if (err) {
             console.error("error sending todo")
             res.status(500).send(err)
         } else {
-            res.status(200).json({userData: results})
+            res.status(200).json({ userData: results })
         }
     });
 })
 
+//dodawanie notatek
 app.post('/blank', (req: Request, res: Response) => {
     const starterData = '[{"insert": "twój tekst..."}]'
-    const { user_id, Name, Author, Description} = req.body;
+    const { user_id, Name, Author, Description } = req.body;
     const sql = 'INSERT INTO notes (user_id, Name, Author, Description, Data) VALUES (?, ?, ?, ?, ?)';
     connection.query(sql, [user_id, Name, Author, Description, starterData], (err: QueryError | null) => {
         //console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
-        if(err) {
+        if (err) {
             console.error("cant create note " + err);
             res.status(500).send('Error creating note');
         } else {
@@ -181,12 +211,14 @@ app.post('/blank', (req: Request, res: Response) => {
     });
 });
 
+
+//ktualizacja notatek
 app.post('/blank/update', (req: Request, res: Response) => {
-    const { id, user_id, Name, Author, Description, Data} = req.body;
+    const { id, user_id, Name, Author, Description, Data } = req.body;
     const sql = 'UPDATE notes SET user_id=?, Name=?, Author=?, Description=?, Data=? WHERE id = ?';
     connection.query(sql, [user_id, Name, Author, Description, Data, id], (err: QueryError | null) => {
         //console.log('SQL Query:', connection.format(sql, [user_id, Name, Author, Description]));
-        if(err) {
+        if (err) {
             console.error("cant update Notes " + err);
             res.status(500).send('Error creating note');
         } else {
@@ -195,56 +227,136 @@ app.post('/blank/update', (req: Request, res: Response) => {
     });
 })
 
+//********************SETTINGS*******************
+
 
 app.post('/settings/newsletterChange', (req: Request, res: Response) => {
     const { isSelected, id } = req.body;
     const sql = 'UPDATE users SET newsletter= ? WHERE id = ?';
     connection.query(sql, [isSelected, id], (err: QueryError | null) => {
         console.log('SQL Query:', connection.format(sql, [isSelected, id]));
-        if(err) {
+        if (err) {
             console.error('setting didnt chagne ' + err);
             res.status(500).send('error chagning newsletter');
         } else {
-            res.status(200).json({success: true})
+            res.status(200).json({ success: true })
         }
     })
 })
 
 app.post('/settings/newsletter', (req: Request, res: Response) => {
-    const {id} = req.body;
+    const { id } = req.body;
     const sql = 'SELECT newsletter FROM users WHERE id=?';
     connection.query(sql, [id], (err: QueryError | null, results: RowDataPacket[]) => {
-        if(err) {
+        if (err) {
             console.error("coundt send newsletter status " + err);
             res.status(500).send("error in reciving newsletter")
         } else {
-            res.status(200).json({success: true, res: results})
+            res.status(200).json({ success: true, res: results })
         }
     })
 })
 
+app.post('/settings/upload', upload.single('file'), async (req: Request, res: Response) => {
+    try {
+        const userId = req.body.userId;
+
+        if (!userId || !req.file) {
+            return res.status(400).json({ error: 'Invalid request' });
+        }
+
+        const imageBuffer = req.file.buffer;
+
+        connection.query(
+            'UPDATE users SET profilePicture = ? WHERE id = ?',
+            [imageBuffer, userId],
+            (err) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                }
+
+                res.json({ message: 'Profile picture updated successfully' });
+            }
+        );
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/settings/pfp/:userId', (req: Request, res: Response) => {
+    try {
+        const userId = req.params.userId;
+
+        if (!userId) {
+            return res.status(400).json({ error: 'Invalid request' });
+        }
+
+        connection.query(
+            'SELECT profilePicture FROM users WHERE id = ?',
+            [userId],
+            (err, results: RowDataPacket[]) => {
+                console.log('SQL Query:', connection.format('SELECT profilePicture FROM users WHERE id = ?', [userId]));
+                console.log(results[0])
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Internal Server Error' });
+                }
+
+                if (results.length === 0 || !results[0].profilePicture) {
+                    return res.status(404).json({ error: 'Profile picture not found' });
+                }
+
+                const profilePicture = results[0].profilePicture as Buffer;
+                res.setHeader('Content-Type', 'image/jpeg'); // Set the appropriate content type
+                res.end(profilePicture, 'binary');
+            }
+        );
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+//********************CALENDAR*******************
+
+
 app.post('/calendar/addTask', (req: Request, res: Response) => {
-    const {id, string} = req.body;
+    const { id, string } = req.body;
     const sql = 'INSERT INTO calendarevents (user_id, Data) VALUES (?, ?)'
     connection.query(sql, [id, string], (err: QueryError | null) => {
-        if(err) {
+        if (err) {
             console.error("cant create calednar event " + err);
-            res.status(500).send("error creating calerndar event")  
+            res.status(500).send("error creating calerndar event")
         } else {
-            res.status(200).json({success: true})
+            res.status(200).json({ success: true })
         }
     })
 })
 
 app.post('/calendar/getTask', (req: Request, res: Response) => {
-    const {id, date} = req.body
+    const { id, date } = req.body
     const sql = 'SELECT Data FROM calendarevents WHERE user_id = ? AND JSON_EXTRACT(data, \'$.date\') = ?'
     connection.query(sql, [id, date], (err: QueryError | null, results: RowDataPacket[]) => {
-        if(err) {
+        if (err) {
             console.error("cant send task data " + err);
-            res.status(500).send("error sending task data")  
+            res.status(500).send("error sending task data")
         } else {
-            res.status(200).json({success: true, res: results})
+            res.status(200).json({ success: true, res: results })
+        }
+    })
+})
+
+app.post('/calendar/getAllTask', (req: Request, res: Response) => {
+    const { id } = req.body
+    const sql = 'SELECT Data FROM calendarevents WHERE user_id = ?'
+    connection.query(sql, [id], (err: QueryError | null, results: RowDataPacket[]) => {
+        if (err) {
+            console.error("cant send task data " + err);
+            res.status(500).send("error sending task data")
+        } else {
+            res.status(200).json({ success: true, res: results })
         }
     })
 })
