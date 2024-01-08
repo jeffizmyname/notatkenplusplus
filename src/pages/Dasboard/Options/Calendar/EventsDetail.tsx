@@ -137,7 +137,7 @@ export default function EventDetails(props: Props) {
         );
     }
     return (
-        <div className="my-2 mx-5 lg:w-[70%] h-full">
+        <div className="my-2 mx-5 lg:w-[70%] h-[calc(100vh/1.2)]">
             <Card className="w-full h-full">
                 <CardHeader className="flex flex-row justify-between">
                     <div className="flex flex-col items-start">
