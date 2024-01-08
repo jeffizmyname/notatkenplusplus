@@ -4,14 +4,14 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 1.zapisuj i oczytuj tekst  OK
 2.napraw checkboxy w TODO OK (i dodaj kategorie)
 3.kalendarz
-    -wydarzeń OK tylko kolory dorobic
+    -wydarzeń OK tylko kolory dorobic nie bedzie kolorow bo nei chce XD OK
 
-    -dodawnie do niego TODO
+    -dodawnie do niego TODO 
 
 4.udostepnianie po kodzie zaczyanm
 5.tworzenie wykresow
 6.Prezcohowyanie plików
-7.upload avatara
+7.upload avatara OK
 8.napraw dark mode lightmode lub usuń poprstu
 9.całe malownie trzeba zrobic
 10.jakies ustawienia podstawowe
@@ -24,7 +24,7 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 12.ogarnąć wyswietlanie plikow dla kazdego typu pain blank itp
     -w połowie dobrze
 13.menu zapisz eksportuj do notatek
-14.napraw usatwnia zeby dalo sie otworzyc z strony głównej
+14.napraw usatwnia zeby dalo sie otworzyc z strony głównej OK
 15timestamp tworzenia edutowanie sortowanie po nazwie dacie 
 16.dokonc ustawienia newsletter OK
 17.responsywnosc strona dashbard
