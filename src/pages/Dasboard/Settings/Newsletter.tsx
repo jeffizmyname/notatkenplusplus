@@ -24,7 +24,7 @@ export default function Newsletter() {
     }, [])
 
     return (
-        <Card className="h-[65px]">
+        <Card className="h-[65px] mb-4">
         <CardBody className="flex flex-row justify-between">
             <Checkbox
             isSelected={isSelected} onValueChange={setIsSelected}>Chce otrymywać newslettera z nowościami</Checkbox>
