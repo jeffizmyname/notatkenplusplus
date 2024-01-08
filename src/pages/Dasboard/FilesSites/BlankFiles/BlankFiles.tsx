@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getElements } from "../../../../utils/saveLoad";
 import { getId } from "../../../../utils/userData";
-import CardElement from "../../../../components/CardElement";
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import CardElement, { ModalDefaultContent } from "../../../../components/CardElement";
+import { Modal, ModalContent, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, getKeyValue } from "@nextui-org/react";
 
 interface NotesItem {
   id: number;
@@ -14,19 +14,28 @@ interface NotesItem {
   Data: string;
 }
 
-//aformatuj ta do takiego co da sie odczytac dzisiaj juz nie mam siły i nwm czy zdaze jutro :<
+//to jest do zrobienia tylko teraz tego modala treba ogarnąć i bedzie git poradzisz sobie
+
+const rows = [
+  {
+    key: "1",
+    nazwa: "OOF",
+    autor: "JA",
+    datautworzenia: "123 123"
+  }
+]
 
 const columns = [
   {
-    key: "nazwa",
+    key: "Name",
     label: "NAZWA",
   },
   {
-    key: "autor",
+    key: "Author",
     label: "AUTOR",
   },
   {
-    key: "datautworzenia",
+    key: "CreationDate",
     label: "DATA UTWORZENIA",
   },
 ];
@@ -68,18 +77,25 @@ export default function BlankFiles() {
                 CreationDate={note.CreationDate}
               />
             ))} */}
-          <Table>
+          <Table
+          onRowAction={(key) => alert(`Opening item ${key}...`)}>
             <TableHeader columns={columns}>
               {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
             </TableHeader>
             <TableBody items={userNotes}>
               {(item) => (
                 <TableRow key={item.id}>
-                  {(columnKey) => <TableCell>{item[columnKey]}</TableCell>}
+                  {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
                 </TableRow>
               )}
             </TableBody>
           </Table>
+          <Modal>
+            <ModalContent>
+              {/* <ModalDefaultContent/> */}
+              e
+            </ModalContent>
+          </Modal>
         </div>
       </div>
     </div>

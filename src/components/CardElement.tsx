@@ -90,7 +90,7 @@ type ModalDefaultContentProps = {
     desc: string;
 };
 
-const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handleOpen, onClose, name, author, desc }) => (
+export const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handleOpen, onClose, name, author, desc }) => (
     <>
         <ModalHeader className="flex flex-col gap-1">{name}</ModalHeader>
         <ModalBody>
