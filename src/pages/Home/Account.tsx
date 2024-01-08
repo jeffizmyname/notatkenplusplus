@@ -1,15 +1,29 @@
 import { NavbarContent, NavbarItem, Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Link, Button } from "@nextui-org/react";
-import { ThemeChanger } from "../../components/ThemeChagner";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getPfp } from "../../utils/getProfilePic";
+import { getId } from "../../utils/userData";
+import { useEffect, useState } from "react";
 
 export default function Account() {
+    const [image, setimage] = useState<string | undefined>(undefined);
     const navigate = useNavigate();
     const location = useLocation();
+    const id = getId();
+
+    useEffect(() => {
+        getPfp(id, setimage);
+    }, [id]);
+
     const data = sessionStorage.getItem("userData")
     let email = "";
+    let name = "";
+    let surname = "";
+
     if (data !== null) {
         const jsonData = JSON.parse(data);
         email = jsonData.email
+        name = jsonData.name
+        surname = jsonData.surname
     }
 
     return (
@@ -27,9 +41,9 @@ export default function Account() {
                         as="button"
                         className="transition-transform"
                         color="primary"
-                        name="Jason Hughes"
+                        name={`${name} ${surname}`}
                         size="md"
-                        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                        src={image}
                     />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
@@ -39,16 +53,13 @@ export default function Account() {
                     </DropdownItem>
                     {/*onclick jest jest na glownej stronie to /dashboard/settings */}
                     <DropdownItem key="settings"
-                    onClick={() => {navigate("settings")}}>Settings</DropdownItem>
+                    onClick={() => {location.pathname == "/" ? navigate("/dashboard/settings") : navigate("settings")}}>Settings</DropdownItem>
                     <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
                     <DropdownItem key="logout" color="danger" onClick={() => {sessionStorage.setItem("loggedIn", "false"); navigate("/")}}>
                         Log Out
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-            <NavbarItem>
-                <ThemeChanger />
-            </NavbarItem>
         </NavbarContent>
     );
 }
