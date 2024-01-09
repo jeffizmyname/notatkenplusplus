@@ -20,11 +20,11 @@ export default function Login() {
                 sessionStorage.setItem("userData", `{"email": "${email}"}`)
                 prepData(email)
                 setErrMessage('');
-                navigate('/dashboard/MyThings');
+                navigate('/dashboard/Calendar');
             })
             .catch(error => {
-                if (error.response.status === 401) setErrMessage('Invalid email or password')
-                if (error.response.status === 400) { setErrMessage('Error while logging in'); console.log(error) }
+                if (error.response.status === 401) setErrMessage('Zły email lub hasło')
+                if (error.response.status === 400) { setErrMessage('Error podczas logowania'); console.log(error) }
             });
     };
 
@@ -35,7 +35,7 @@ export default function Login() {
         <div className='w-screen h-screen flex justify-center items-center'>
             <Card isBlurred className="w-1/4 max-w-[400px] min-w-[300px] bg-default/80">
                 <CardHeader>
-                    <p className="text-4xl w-full font-bold text-center">Log in</p>
+                    <p className="text-4xl w-full font-bold text-center">Zaloguj się</p>
                 </CardHeader>
                 <CardBody className="flex flex-col gap-2">
                     <Input
@@ -43,13 +43,13 @@ export default function Login() {
                         type="email"
                         label="Email"
                         isInvalid={errMessage !== ""}
-                        placeholder="you@example.com"
+                        placeholder="ty@example.com"
                         color="default"
                         onChange={(e) => setEmail(e.target.value)}>
                     </Input>
                     <Input
                         size="md"
-                        label="Password"
+                        label="Hasło"
                         type={isVisible ? "text" : "password"}
                         isInvalid={errMessage !== ""}
                         color="default"
@@ -64,11 +64,11 @@ export default function Login() {
                             </button>
                         }>
                     </Input>
-                    <Button color="primary" variant='flat' onClick={handleLogin}>Login</Button>
+                    <Button color="primary" variant='flat' onClick={handleLogin}>Zaloguj się</Button>
                     {/* {errMessage && <p className='w-full text-center text-red-700'>{errMessage}</p>} */}
                 </CardBody>
                 <CardFooter>
-                    <p className="text-small w-full text-center">No account? Regiester <Link href="/register" className='pointer-events-auto' underline="always">Here</Link></p>
+                    <p className="text-small w-full text-center">Nie masz Konta? Zarejestruj sie <Link href="/register" className='pointer-events-auto' underline="always">Tutaj</Link></p>
                 </CardFooter>
             </Card>
         </div>

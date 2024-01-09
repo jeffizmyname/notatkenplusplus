@@ -23,33 +23,33 @@ export function HandleValidation(fields: Fields): Errors {
     //Name
     if (!formFields["name"]) {
         formIsValid = false;
-        formErrors["name"] = "Cannot be empty";
+        formErrors["name"] = "Nie moze być puste";
     }
 
     if (formFields["name"] !== "") {
         if (!formFields["name"]?.match(/^[a-zA-Z]+$/)) {
             formIsValid = false;
-            formErrors["name"] = "Only letters";
+            formErrors["name"] = "Tylko litery";
         }
     }
 
     //SurName
     if (!formFields["surName"]) {
         formIsValid = false;
-        formErrors["surName"] = "Cannot be empty";
+        formErrors["surName"] = "Nie moze być puste";
     }
 
     if (typeof formFields["surName"] !== "undefined") {
         if (!formFields["surName"].match(/^[a-zA-Z]+$/)) {
             formIsValid = false;
-            formErrors["surName"] = "Only letters";
+            formErrors["surName"] = "Tylko litery";
         }
     }
 
     //Email
     if (!formFields["email"]) {
         formIsValid = false;
-        formErrors["email"] = "Cannot be empty";
+        formErrors["email"] = "Nie moze być puste";
     }
 
     if (formFields["email"] !== null) {
@@ -59,7 +59,7 @@ export function HandleValidation(fields: Fields): Errors {
         if(typeof lastAtPos === 'number' && typeof lastDotPos  === 'number') {
         if (!(lastAtPos < lastDotPos && lastAtPos > 0 && formFields["email"]?.indexOf('@@') == -1 && lastDotPos > 2 && (fields?.["email"]?.length ?? 0 - lastDotPos) > 2)) {
             formIsValid = false;
-            formErrors["email"] = "Email is not valid";
+            formErrors["email"] = "Email jest nieprawidłowy";
         }
         }
     }
@@ -67,14 +67,14 @@ export function HandleValidation(fields: Fields): Errors {
     //password
     if(!formFields["password"]) {
         formIsValid = false;
-        formErrors["password"] = "Cannot be empty";
+        formErrors["password"] = "Nie moze być puste";
     } 
 
     if (formFields["password"] !== null) {
 
         if (formFields["password"]?.length && formFields["password"].length < 8) {
             formIsValid = false;
-            formErrors["password"] = 'Password must be at least 8 characters long';
+            formErrors["password"] = 'Hasło musi zawierać conajmniej 8 znaków';
         }
 
         // Regular expressions for additional criteria
@@ -86,33 +86,33 @@ export function HandleValidation(fields: Fields): Errors {
         // Check additional criteria
         if (!hasUpperCase) {
             formIsValid = false;
-            formErrors["password"] = 'Password must contain at least one uppercase letter';
+            formErrors["password"] = 'Hasło musi zawierać conajmniej jedna dużą literke';
         }
 
         if (!hasLowerCase) {
             formIsValid = false;
-            formErrors["password"] = 'Password must contain at least one lowercase letter';
+            formErrors["password"] = 'Hasło musi zawierać conajmniej jedną małą literkę';
         }
 
         if (!hasDigit) {
             formIsValid = false;
-            formErrors["password"] = 'Password must contain at least one digit';
+            formErrors["password"] = 'Hasło musi zawierać conajmniej jedną cyfre';
         }
 
         if (!hasSpecialChar) {
             formIsValid = false;
-            formErrors["password"] = 'Password must contain at least one special character';
+            formErrors["password"] = 'Hasło musi zawierać conajmniej jedn znak specjalny';
         }
     }
 
     if(formFields["passwordRep"] !== formFields["password"] && formFields["passwordRep"] != "") {
         formIsValid = false;
-        formErrors["passwordRep"] = "The passwords dont match";
+        formErrors["passwordRep"] = "Hasła się nie zgadzaja";
     }
     
     if(!formFields["passwordRep"]) {
         formIsValid = false;
-        formErrors["passwordRep"] = "Cannot be empty";
+        formErrors["passwordRep"] = "Nie moze być puste";
     }
 
     if(formIsValid) {

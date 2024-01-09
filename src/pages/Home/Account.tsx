@@ -30,7 +30,7 @@ export default function Account() {
         <NavbarContent as="div" justify="end">
             {location.pathname === "/" ? 
                         <NavbarItem>
-                        <Button as={Link} color="primary" variant="flat" href="/dashboard">Dashboard</Button>
+                        <Button as={Link} color="primary" variant="flat" href="/dashboard/Calendar">Dashboard</Button>
                         </NavbarItem>
                         : <></>}
 
@@ -48,13 +48,12 @@ export default function Account() {
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="flat">
                     <DropdownItem key="profile" className="h-14 gap-2">
-                        <p className="font-semibold">Signed in as</p>
+                        <p className="font-semibold">Zalogowany jako</p>
                         <p className="font-semibold">{email}</p>
                     </DropdownItem>
-                    {/*onclick jest jest na glownej stronie to /dashboard/settings */}
                     <DropdownItem key="settings"
-                    onClick={() => {location.pathname == "/" ? navigate("/dashboard/settings") : navigate("settings")}}>Settings</DropdownItem>
-                    <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+                    onClick={() => {location.pathname == "/" ? navigate("/dashboard/settings") : navigate("settings")}}>Ustawienia</DropdownItem>
+                    <DropdownItem key="help_and_feedback">Pomoc i Opinia</DropdownItem>
                     <DropdownItem key="logout" color="danger" onClick={() => {sessionStorage.setItem("loggedIn", "false"); navigate("/")}}>
                         Log Out
                     </DropdownItem>

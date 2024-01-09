@@ -97,14 +97,14 @@ export default function Login() {
         <div className='w-screen h-screen flex justify-center items-center'>
             <Card isBlurred className="w-1/4 max-w-[400px] min-w-[300px] bg-default/80">
                 <CardHeader>
-                    <p className="text-4xl w-full font-bold text-center">Register</p>
+                    <p className="text-4xl w-full font-bold text-center">Zarejestruj się</p>
                 </CardHeader>
                 <form onSubmit= {e => contactSubmit(e)}>
                     <CardBody className="flex flex-col gap-2">
                         <Input
                             size='md'
                             type='Name'
-                            label="Name"
+                            label="Imie"
                             isInvalid={"name" in errors}
                             errorMessage={"name" in errors ? errors['name'] : ""}
                             onChange={e => handleChange('name', e.target.value)}
@@ -113,7 +113,7 @@ export default function Login() {
                         <Input
                             size='md'
                             type='Surname'
-                            label="Surname"
+                            label="Nazwisko"
                             isInvalid={"surName" in errors}
                             errorMessage={"surName" in errors ? errors['surName'] : ""}
                             onChange={e => handleChange('surName', e.target.value)}
@@ -131,7 +131,7 @@ export default function Login() {
                         </Input>
                         <Input
                             size="md"
-                            label="Password"
+                            label="Hasło"
                             type={isVisible ? "text" : "password"}
                             isInvalid={"password" in errors}
                             errorMessage={"password" in errors ? errors['password'] : ""}
@@ -142,7 +142,7 @@ export default function Login() {
                         </Input>
                         <Input
                             size="md"
-                            label="Repeat your password"
+                            label="Powtórz swoje hasło"
                             type={isVisible ? "text" : "password"}
                             isInvalid={"passwordRep" in errors}
                             errorMessage={"passwordRep" in errors ? errors['passwordRep'] : ""}
@@ -151,11 +151,11 @@ export default function Login() {
                             onChange={e => handleChange('passwordRep', e.target.value)}
                             value={fields["passwordRep"]}>
                         </Input>
-                        <Button type="submit" color="primary" variant='flat'>Create account</Button>
+                        <Button type="submit" color="primary" variant='flat'>Stwórz konto</Button>
                     </CardBody>
                 </form>
                 <CardFooter>
-                    <p className="text-small w-full text-center">Do you have an account? Login <Link href='/login' className='pointer-events-auto' underline="always">Here</Link></p>
+                    <p className="text-small w-full text-center">Masz jużkonto? Zaloguj się <Link href='/login' className='pointer-events-auto' underline="always">Tutaj</Link></p>
                 </CardFooter>
             </Card>
         </div>
