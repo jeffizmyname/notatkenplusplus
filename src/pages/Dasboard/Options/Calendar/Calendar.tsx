@@ -7,6 +7,7 @@ import EventDetails from './EventsDetail';
 import { RightArrow } from '../../../../assets/icons/RightArrow';
 import { LeftArrow } from '../../../../assets/icons/LeftArrow';
 import './scrollbarstyle.css'
+import Clock from './clock';
 
 interface EventData {
     type: string,
@@ -107,7 +108,7 @@ export const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick, s
             [&>*:nth-child(42)]:rounded-br-lg`}>
                 {daysInGrid.map((date) => (
                     <div
-                        className={`${style !== "big" ? 'relative lg:w-[60px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default' :
+                        className={`${style !== "big" ? 'relative lg:p-[20px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default' :
                             style === 'big' ? "relative h-[calc(100vh/9)] xs:h-[calc(100vh/8.5)] lg:h-[calc(100vh/7.6)] border-1 border-default pr-4 pl-4 pt-4" :
                                 style === 'months' ? 'w-[100px]'
                                     : ""}
@@ -170,11 +171,14 @@ export default function Calendar() {
 
     return (
         <div className='flex lg:flex-row flex-col w-full h-full'>
+            <div>
             <CCalendar
                 currentDate={selectedDate || new Date()}
                 onDateClick={handleDateClick}
                 style='normal'
                 events={null} />
+            <Clock/>
+            </div>
             <EventDetails
                 currentDate={selectedDate}
                 onPrevDayClick={handlePrevDayClick}
