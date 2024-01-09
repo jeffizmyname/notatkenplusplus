@@ -11,7 +11,7 @@ export function prepData(email: string) {
     axios.post('http://192.168.100.245:3001/getUserData', { email })
     .then(response => {
         sessionStorage.setItem("userData", JSON.stringify(response.data.user))
-        console.clear();
+        //console.clear();
         console.log(sessionStorage.getItem("userData"));
     })
     .catch(error => {
