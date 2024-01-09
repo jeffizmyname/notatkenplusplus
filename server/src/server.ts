@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 
 //importy
-import mysql, { Connection, QueryError, RowDataPacket } from 'mysql2';
+import mysql, { Connection, QueryError, ResultSetHeader, RowDataPacket } from 'mysql2';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import crypto from 'crypto';
@@ -24,7 +24,7 @@ const fileFilter = (req: Request, file: Express.Multer.File, callback: multer.Fi
 
 //storage
 const storage = multer.memoryStorage();
-const upload = multer({ storage, fileFilter});
+const upload = multer({ storage, fileFilter });
 
 
 
@@ -71,6 +71,45 @@ app.post('/getUserData', (req: Request, res: Response) => {
         res.json({ user: results[0] });
     })
 })
+
+//aktualizacja danych o uzytkowniku
+app.post('/updateUserData', (req: Request, res: Response) => {
+    const { name, surname, email, id } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required for updating user information.' });
+    }
+
+    connection.query('SELECT id FROM users WHERE email = ? AND id <> ?', [email, id], (emailCheckErr: QueryError | null, emailCheckResults: RowDataPacket[]) => {
+        if (emailCheckErr) {
+            console.error('Error checking email uniqueness:', emailCheckErr);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+
+        if (emailCheckResults.length > 0) {
+            return res.status(400).json({ error: 'Tego emaila juz ktoś używa.' });
+        }
+
+        const updateSql = 'UPDATE users SET name = ?, surname = ?, email = ? WHERE id = ?';
+
+        connection.query(updateSql, [name, surname, email, id], (updateErr: QueryError | null, updateResults: ResultSetHeader) => {
+            console.log('SQL Query:', connection.format(updateSql, [name, surname, email, id]));
+
+            if (updateErr) {
+                console.error('Error updating user information:', updateErr);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
+
+            if (updateResults.affectedRows === 0) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            res.json({ message: 'User information updated successfully' });
+        });
+    });
+});
+
+
 
 //zajmuje sie rejestracja
 app.post('/register', (req: Request, res: Response) => {
@@ -181,6 +220,20 @@ app.post('/todo/update', (req: Request, res: Response) => {
     });
 })
 
+//usun todo
+app.post('/todo/delete', (req: Request, res: Response) => {
+    const { id } = req.body;
+    const sql = 'DELETE FROM ToDoS WHERE id = ?';
+    connection.query(sql, [id], (err: QueryError | null) => {
+        if (err) {
+            console.error("cant delete TODO " + err);
+            res.status(500).send('Error deleting TODO');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+})
+
 //wszukiwanie notatek
 app.get('/blank/:userId', (req: Request, res: Response) => {
     const userId = req.params.userId;
@@ -221,6 +274,20 @@ app.post('/blank/update', (req: Request, res: Response) => {
         if (err) {
             console.error("cant update Notes " + err);
             res.status(500).send('Error creating note');
+        } else {
+            res.status(200).json({ success: true });
+        }
+    });
+})
+
+//usuwanie notatek
+app.post('/blank/delete', (req: Request, res: Response) => {
+    const { id } = req.body;
+    const sql = 'DELETE FROM notes WHERE id = ?';
+    connection.query(sql, [id], (err: QueryError | null) => {
+        if (err) {
+            console.error("cant delete note " + err);
+            res.status(500).send('Error deleting note');
         } else {
             res.status(200).json({ success: true });
         }
@@ -297,8 +364,8 @@ app.get('/settings/pfp/:userId', (req: Request, res: Response) => {
             'SELECT profilePicture FROM users WHERE id = ?',
             [userId],
             (err, results: RowDataPacket[]) => {
-                console.log('SQL Query:', connection.format('SELECT profilePicture FROM users WHERE id = ?', [userId]));
-                console.log(results[0])
+                //console.log('SQL Query:', connection.format('SELECT profilePicture FROM users WHERE id = ?', [userId]));
+                //console.log(results[0])
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ error: 'Internal Server Error' });
