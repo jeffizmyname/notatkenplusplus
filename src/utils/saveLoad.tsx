@@ -10,7 +10,7 @@ export function create(type: string, userId: number, Name: string, Author: strin
     }
     axios.post(`http://192.168.100.245:3001/${type}`, prepData)
     .then(() => {
-        alert(`${type} created`)
+        console.log(`${type} created`)
     })
     .catch(error => {console.log("error: " + error)})
 }
