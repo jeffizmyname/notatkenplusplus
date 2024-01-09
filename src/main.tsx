@@ -9,7 +9,6 @@ import Dashboard from './pages/Dasboard'
 import ErrorPage from './Error'
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import './index.css'
-import Files from './pages/Dasboard/Options/Files'
 import Blank from './pages/Dasboard/Options/Blank/Blank'
 import Paint from './pages/Dasboard/Options/Paint/Paint'
 import ToDo from './pages/Dasboard/Options/ToDo'
@@ -37,8 +36,7 @@ function App() {
           <Route path='ToDo/:todoID' element={<ToDo/>}/>
           <Route path="Blank/:blankID" element={<Blank/>}/>
           {/* <Route path="Chart" element={<Chart/>}/> */}
-          <Route path='MyThings' index element={<Files/>}/>
-          <Route path="Calendar" element={<Calendar/>} />
+          <Route path="Calendar" index element={<Calendar/>} />
           <Route path='BlankFiles' element={<BlankFiles/>}/>  
           <Route path='PaintFiles' element={<PaintFiles/>}/>
           <Route path='ToDoFiles' element={<ToDoFiles/>}/>
