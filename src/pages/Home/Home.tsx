@@ -1,15 +1,19 @@
 import NavBar from "./NavBar"
 import Footer from "./Footer"
 import Banner from "./Banner"
-import Code from "./Code"
+import Offer from "./Offer"
+import Comunity from "./Comunity"
+import Help from "./Help"
 
 export default function Home() {
     return (
-        <div className="h-fit">
+        <div className="h-screen overflow-scroll">
             <NavBar/>
             <Banner/>
-            <Code/>
-            {/* <Footer/> */}
+            <Offer/>
+            <Comunity/>
+            <Help/>
+            <Footer/>
         </div>
     )
 }

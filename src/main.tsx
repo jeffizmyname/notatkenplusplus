@@ -10,9 +10,9 @@ import ErrorPage from './Error'
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import './index.css'
 import Blank from './pages/Dasboard/Options/Blank/Blank'
-import Paint from './pages/Dasboard/Options/Paint/Paint'
+// import Paint from './pages/Dasboard/Options/Paint/Paint'
 import ToDo from './pages/Dasboard/Options/ToDo'
-import Chart from './pages/Dasboard/Options/Chart'
+// import Chart from './pages/Dasboard/Options/Chart'
 import Calendar from './pages/Dasboard/Options/Calendar/CalendarMain'
 import BlankFiles from './pages/Dasboard/FilesSites/BlankFiles/BlankFiles'
 import PaintFiles from './pages/Dasboard/FilesSites/PaintFiles/PaintFiles'
@@ -55,7 +55,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <NextUIProvider>
       <BrowserRouter>
-        <div className="w-screen h-screen text-foreground bg-gradient-to-t from-primary-100 to-default-0 to-50%">
+        <div className="w-screen h-screen text-foreground bg-gradient-to-t from-primary-100 to-slate-950 to-60%">
           <App/>
         </div>
       </BrowserRouter>

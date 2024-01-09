@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getId } from '../../../utils/userData';
 import { useParams } from 'react-router-dom';
-import { Button, Checkbox, Input } from '@nextui-org/react';
+import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Input, cn } from '@nextui-org/react';
 import { getElements, handleSave } from '../../../utils/saveLoad';
+import { PlusIcon } from '../../../assets/icons/PlusIcon';
 
 interface Todo {
     id: number;
@@ -66,33 +67,51 @@ function ToDo() {
 
 
     return (
-        <div>
-            <div>
+        <div className='m-5 overflow-scroll'>
+            <div className='w-full flex justify-center'>
                 {todoData && (
-                    <>
-                        <p>Nazwa: {todoData.Name}</p>
-                        <p>Autor: {todoData.Author}</p>
-                        <p>Opis: {todoData.Description}</p>
-                    </>
+                    <Card className='lg:max-w-[500px] lg:min-w-[300px] xs:w-full'>
+                        <CardHeader>
+                            <p className='text-3xl font-bold'>{todoData.Name}</p>
+                        </CardHeader>
+                        <CardBody>
+                            <p>Opis: {todoData.Description}</p>
+                        </CardBody>
+                        <CardFooter className='flex flex-row justify-between'>
+                            <p className='text-gray-500'>autor: {todoData.Author}</p>
+                            <Button onClick={HandleSave}>Zapisz</Button>
+                        </CardFooter>
+                    </Card>
                 )}
             </div>
-            <div>
-                <p>wpisy</p>
-                    {entries.map((entry, index) => (
-                        <div key={index} className='w-[250px] flex row'>
+            <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 h-[fit] max-h-[50vh] xs:max-h-full w-full overflow-scroll mt-2 pt-10'>
+                {entries.map((entry, index) => (
+                    <div key={index} className='w-[full] h-[100px] flex justify-center'>
+                        <Card className='w-full'>
+                            <CardBody className='flex flex-row items-center'>
                             <Checkbox isSelected={entry.isDone}
                                 onValueChange={(isChecked) => { handleCheckboxChange(index, isChecked) }}
                                 value={String(index)} />
-                            <Input
-                                defaultValue={entry.task}
-                                onChange={(e) => handleTaskChange(index, e.target.value)} />
-                            <Button onClick={() => handleDelete(index)}>Delete</Button>
-                        </div>
-                    ))}
+                                <div className='w-full'>
+                                    <ButtonGroup className='w-full'>
+                                        <div className='bg-[#3f3f46] h-[50px] w-[80%] flex items-center justify-center pl-2 rounded-l-lg'>
+                                            <Input
+                                                size='sm'
+                                                labelPlacement="outside"
+                                                defaultValue={entry.task}
+                                                className='w-[30'
+                                                onChange={(e) => handleTaskChange(index, e.target.value)} />
+                                        </div>
+                                        <Button className='h-[50px]' onClick={() => handleDelete(index)}>Delete</Button>
+                                    </ButtonGroup>
+                                </div>
+                            </CardBody>
+                        </Card>
+                    </div>
+                ))}
             </div>
-            <div>
-                <Button onClick={addField}>Nowy wpis</Button>
-                <Button onClick={HandleSave}>Zapisz</Button>
+            <div className='fixed top-[95%] right-5'>
+                <Button color='primary' onClick={addField}>Nowy wpis <PlusIcon /></Button>
             </div>
         </div>
     );
