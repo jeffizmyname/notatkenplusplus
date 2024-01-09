@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getId } from '../../../utils/userData';
 import { useParams } from 'react-router-dom';
-import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Divider, Input, cn } from '@nextui-org/react';
+import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Input } from '@nextui-org/react';
 import { getElements, handleSave } from '../../../utils/saveLoad';
 import { PlusIcon } from '../../../assets/icons/PlusIcon';
 
@@ -37,7 +37,7 @@ function ToDo() {
         }
 
         fetchData();
-    }, []);
+    }, [TODOid.todoID]);
 
     function addField() {
         setEntries((prevEntries) => [...prevEntries, { isDone: false, task: '' }]);
@@ -110,7 +110,7 @@ function ToDo() {
                     </div>
                 ))}
             </div>
-            <div className='fixed top-[95%] right-5'>
+            <div className='fixed xs:top-[93%] lg:top-[92%] right-5'>
                 <Button color='primary' onClick={addField}>Nowy wpis <PlusIcon /></Button>
             </div>
         </div>
