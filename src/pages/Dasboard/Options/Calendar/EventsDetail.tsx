@@ -7,6 +7,7 @@ import Event from "./Event";
 import React, { ReactNode, useEffect, useState } from "react";
 import { LeftArrow } from "../../../../assets/icons/LeftArrow";
 import { RightArrow } from "../../../../assets/icons/RightArrow";
+import { PlusIcon } from "../../../../assets/icons/PlusIcon";
 
 interface Props {
     currentDate: Date | null;
@@ -166,7 +167,7 @@ export default function EventDetails(props: Props) {
                             <RightArrow className='scale-50' />
                         </Button>
                     </ButtonGroup>
-                    <Button variant="solid" color="primary" radius="sm" onClick={props.onOpen}>Dodaj wydarzenie</Button>
+                    <Button variant="solid" color="primary" radius="sm" onClick={props.onOpen}>Dodaj <PlusIcon/></Button>
                     </div>
                 </CardHeader>
                 <CardBody className="h-[800px] overflow-scroll flex flex-row">
