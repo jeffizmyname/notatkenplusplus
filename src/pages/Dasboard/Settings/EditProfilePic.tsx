@@ -26,9 +26,7 @@ export default function EditProfilePic() {
                 },
             });
 
-            // Optionally, you can update the user's profile picture on the frontend
-            // by fetching the updated data from the server and updating the state.
-
+            window.location.reload();
             console.log('Profile picture updated successfully');
         } catch (error) {
             console.error('Error updating profile picture:', error);
