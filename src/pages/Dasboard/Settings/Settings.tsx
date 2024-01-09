@@ -6,6 +6,7 @@ import EditProfilePic from "./EditProfilePic";
 
 export default function Settings() {
 
+
     return (
         <div className="grid lg:grid-cols-2 lg:grid-rows-2 gap-3 m-4">
             {/* <p>zmiana avatara / wysylaj emaile z nowosciami / zmiana hasla / zmiani emaila /  usun konto</p> */}
