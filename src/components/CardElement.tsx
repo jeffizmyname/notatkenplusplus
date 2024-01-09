@@ -1,8 +1,9 @@
-import { Card, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea, CardBody } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Textarea } from "@nextui-org/react";
 import { useState } from "react";
 import { getId } from "../utils/userData";
 import { useNavigate } from 'react-router-dom';
 import { create } from "../utils/saveLoad";
+import { PlusIcon } from "../assets/icons/PlusIcon";
 
 
 type Props = {
@@ -22,6 +23,7 @@ interface todoForm {
 }
 
 
+
 export default function CardElement(props: Props) {
     const navigate = useNavigate();
 
@@ -29,22 +31,26 @@ export default function CardElement(props: Props) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const CardType = props.type;
 
-    function parseDateString(dateString: string) {
-        const date = new Date(dateString);
+    // function parseDateString(dateString: string) {
+    //     const date = new Date(dateString);
 
-        const result = {
-            year: date.getUTCFullYear(),
-            month: date.getUTCMonth() + 1, // Months are zero-indexed
-            day: date.getUTCDate(),
-            hours: date.getUTCHours(),
-            minutes: date.getUTCMinutes(),
-            seconds: date.getUTCSeconds()
-        };
+    //     const result = {
+    //         year: date.getUTCFullYear(),
+    //         month: date.getUTCMonth() + 1, // Months are zero-indexed
+    //         day: date.getUTCDate(),
+    //         hours: date.getUTCHours(),
+    //         minutes: date.getUTCMinutes(),
+    //         seconds: date.getUTCSeconds()
+    //     };
 
-        return result;
+    //     return result;
+    // }
+
+    const handleOpen = () => {
+        navigate(`/dashboard/${props.category}/${props.fileId}`)
     }
 
-    const parsedDate = parseDateString(props.CreationDate);
+    //const parsedDate = parseDateString(props.CreationDate);
 
     const handleChange = (field: string, value: string) => {
         setFields({
@@ -53,13 +59,9 @@ export default function CardElement(props: Props) {
         })
     }
 
-    const handleOpen = () => {
-        navigate(`/dashboard/${props.category}/${props.fileId}`)
-    }
-
     return (
         <>
-            <Card
+            {/* <Card
                 isPressable
                 onPress={onOpen}
                 className="min-w-[200px] h-[50px]">
@@ -68,13 +70,14 @@ export default function CardElement(props: Props) {
             : <CardBody>
                 utwórz nową notatke
                 </CardBody>}
-            </Card>
+            </Card> */}
+            <Button color="primary" onClick={onOpen} endContent={<PlusIcon/>} className="w-fit">Dodaj Nowe</Button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalContent>
                     {CardType !== "new" ? (
                         <ModalDefaultContent handleOpen={handleOpen} onClose={onClose} name={props.ListName} author={props.Author} desc={props.Desc} />
                     ) : (
-                        <ModalNewContent onClose={onClose} handleChange={handleChange} fields={fields} category={props.category} />
+                        <ModalNewContent onClose={onClose} setFields={setFields}  handleChange={handleChange} fields={fields} category={props.category} />
                     )}
                 </ModalContent>
             </Modal>
@@ -111,15 +114,22 @@ export const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handle
     </>
 );
 
+interface ModalNewContentProps {
+    onClose: () => void;
+    setFields: React.Dispatch<React.SetStateAction<todoForm>>;
+    handleChange: (field: string, value: string) => void;
+    fields: todoForm;
+    category: string;
+}
 
-const ModalNewContent: React.FC<{ onClose: () => void; handleChange: (field: string, value: string) => void; fields: todoForm; category: string }> = ({ onClose, handleChange, fields, category }) => (
+const ModalNewContent: React.FC<ModalNewContentProps> = ({ onClose, setFields, handleChange, fields, category }) => (
     <>
-        <ModalHeader className="flex flex-col gap-1">Nowa Lista</ModalHeader>
+        <ModalHeader className="flex flex-col gap-1">Nowy</ModalHeader>
         <ModalBody>
-            <Input label="Nazwa Listy" onChange={e => handleChange('ListName', e.target.value)} value={fields.ListName || ''}></Input>
+            <Input label="Nazwa" onChange={e => handleChange('ListName', e.target.value)} value={fields.ListName || ''}></Input>
             <Input label="Autor" onChange={e => handleChange('Author', e.target.value)} value={fields.Author || ''}></Input>
             <Textarea
-                label="Opis listy"
+                label="Opis"
                 className="max-w-m"
                 onChange={e => handleChange('Desc', e.target.value)} value={fields.Desc || ''}
             />
@@ -128,7 +138,7 @@ const ModalNewContent: React.FC<{ onClose: () => void; handleChange: (field: str
             <Button color="danger" variant="light" onPress={onClose}>
                 Close
             </Button>
-            <Button color="primary" onPress={() => create(category, getId()!, fields.ListName || '', fields.Author || '', fields.Desc || '')}>
+            <Button color="primary" onPress={() => {create(category, getId()!, fields.ListName || '', fields.Author || '', fields.Desc || ''); onClose(); setFields({});}}>
                 Create
             </Button>
         </ModalFooter>
