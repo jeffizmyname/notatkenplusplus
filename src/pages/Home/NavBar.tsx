@@ -1,7 +1,8 @@
-import {Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
+import {Link, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Image } from "@nextui-org/react";
 import React from "react";
 import Account from "./Account";
 import NoAccount from "./NoAccount"
+import logo from "./logo.png"
 
 //pan tu mnei react routera uzyj zerby mne to działało no tak ten tengo wiesz 
 
@@ -25,16 +26,18 @@ export default function NavBar() {
 
             <NavbarContent className="sm:hidden pr-3" justify="center">
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">Notatki <sup>++</sup></p>
+                    {/* <p className="font-bold text-inherit">Notatki <sup>++</sup></p> */}
+                    <img width={100} src={logo}/>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">Notatki <sup>++</sup></p>
+                    {/* <p className="font-bold text-inherit">Notatki <sup>++</sup></p> */}
+                    <img width={100} src={logo}/>
                 </NavbarBrand>
                 <NavbarItem>
-                    Item1
+                    Item1   
                 </NavbarItem>
                 <NavbarItem>
                     Item2
