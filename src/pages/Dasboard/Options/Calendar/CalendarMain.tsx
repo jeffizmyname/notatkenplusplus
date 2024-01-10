@@ -6,13 +6,13 @@ import CalendarMonths from "./CalendarMonths";
 export default function CalendarMain() {
     return (
         <Tabs className="flex w-full h-fit flex-col pb-0 px-5 pt-2" color="primary">
-            <Tab title="wydarzenia">
+            <Tab title="wydarzenia" className="pb-0">
                 <Calendar/>
             </Tab>
             <Tab title="kalendarz" className="pb-0">
                 <CalendarFull/>
             </Tab>
-            <Tab title="miesiące">
+            <Tab title="miesiące" className="pb-0">
                 <CalendarMonths/>
             </Tab>
         </Tabs>

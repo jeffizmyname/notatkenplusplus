@@ -88,11 +88,11 @@ export const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick, s
                     </ButtonGroup>
                 </div> :
                 <div>
-                    <span style={{ textTransform: 'capitalize' }} className='w-[420px] flex justify-center items-center px-10 font-medium tracking-wider'>
+                    <span style={{ textTransform: 'capitalize' }} className='w-full flex justify-center items-center px-10 font-medium tracking-wider'>
                         {format(currentMonth, 'LLLL', { locale: pl })}
                     </span>
                 </div>}
-            <div className={`flex flex-row justify-around my-2 ${style === "months" ? 'w-fit [&>*]:px-[24.9px]' : "w-full"}`}>
+            <div className={`flex flex-row justify-around my-2 w-full`}>
                 <span>P</span>
                 <span>W</span>
                 <span>S</span>
@@ -101,7 +101,8 @@ export const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick, s
                 <span>S</span>
                 <span>N</span>
             </div>
-            <div className={`grid grid-cols-7 grid-rows-6 h-fit ${style !== "big" ? 'lg:w-fit md:w-full sm:w-full xs:w-full' : 'w-full'} 
+            <div className={`grid grid-cols-7 grid-rows-6 h-fit ${style === 'months' ? 'lg:w-full'
+                : ""} ${style !== "big" ? 'lg:w-fit md:w-full sm:w-full xs:w-full' : 'w-full'} 
             [&>*:nth-child(1)]:rounded-tl-lg
             [&>*:nth-child(7)]:rounded-tr-lg
             [&>*:nth-child(36)]:rounded-bl-lg
@@ -110,7 +111,7 @@ export const CCalendar: React.FC<CalendarProps> = ({ currentDate, onDateClick, s
                     <div
                         className={`${style !== "big" ? 'relative lg:p-[20px] h-[50px] border-1 border-default flex items-center justify-center z-[1] bg-default-100 hover:bg-default' :
                             style === 'big' ? "relative h-[calc(100vh/9)] xs:h-[calc(100vh/8.5)] lg:h-[calc(100vh/7.6)] border-1 border-default pr-4 pl-4 pt-4" :
-                                style === 'months' ? 'w-[100px]'
+                                style === 'months' ? 'lg:w-full'
                                     : ""}
                         ${isToday(date) ? 'text-primary font-bold' : ''} 
                         ${date.getMonth() !== currentMonth.getMonth() ? 'bg-default-50' : ''}
@@ -172,12 +173,12 @@ export default function Calendar() {
     return (
         <div className='flex lg:flex-row flex-col w-full h-full'>
             <div>
-            <CCalendar
-                currentDate={selectedDate || new Date()}
-                onDateClick={handleDateClick}
-                style='normal'
-                events={null} />
-            <Clock/>
+                <CCalendar
+                    currentDate={selectedDate || new Date()}
+                    onDateClick={handleDateClick}
+                    style='normal'
+                    events={null} />
+                <Clock />
             </div>
             <EventDetails
                 currentDate={selectedDate}

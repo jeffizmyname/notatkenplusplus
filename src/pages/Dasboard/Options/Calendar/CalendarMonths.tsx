@@ -7,20 +7,21 @@ export default function CalendarFull() {
     const handleDateClick = (date: Date) => {
         setSelectedDate(date);
     };
-    
-    return (
-        <div>
-            <CCalendar
-            currentDate={selectedDate || new Date()} 
-            onDateClick={handleDateClick}
-            style="months"
-            events={null}/>
 
+    const months = Array.from({ length: 12 }, (_, index) => {
+        const firstDayOfMonth = new Date(new Date().getFullYear(), index, 1);
+        return (
             <CCalendar
-            currentDate={selectedDate || new Date()} 
-            onDateClick={handleDateClick}
-            style="months"
-            events={null}/>
-        </div>
-    )
+                key={index}
+                currentDate={selectedDate || firstDayOfMonth}
+                onDateClick={handleDateClick}
+                style="months"
+                events={null}
+            />
+        );
+    });
+
+    return <div className="h-[90vh] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 overflow-scroll">
+        {months}
+        </div>;
 }
