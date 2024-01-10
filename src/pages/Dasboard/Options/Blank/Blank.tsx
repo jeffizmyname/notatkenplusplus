@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import ReactQuill from "react-quill";
 import { Delta as TypeDelta, Sources } from 'quill';
 import Delta from "quill-delta";
 import "react-quill/dist/quill.snow.css";
 import EditorToolBar, { formats, modules } from "./EditorToolBar";
-import { Button } from "@nextui-org/react";
 import { getElements, handleSave } from "../../../../utils/saveLoad";
 import { getId } from "../../../../utils/userData";
+import "./Blankstyle.css"
 
 let delta = (new Delta([
     {
@@ -68,9 +68,9 @@ export default function MyComponent() {
         }
 
         fetchData();
-    }, []);
+    }, [Blankid.blankID]);
 
-    const onEditorChange = (value: string, delta: TypeDelta, source: Sources, editor: ReactQuill.UnprivilegedEditor) => {
+    const onEditorChange = (_value: string, _delta: TypeDelta, _source: Sources, editor: ReactQuill.UnprivilegedEditor) => {
         setValue(editor.getContents());
     };
 
@@ -81,8 +81,8 @@ export default function MyComponent() {
     };
 
     return (
-    <div>
-        <EditorToolBar/>
+    <div className="lg:mx-10 lg:my-5">
+        <EditorToolBar onSave={HandleSave}/>
         <ReactQuill 
         theme="snow"
         value={value} 
@@ -90,7 +90,6 @@ export default function MyComponent() {
         modules={modules}
         formats={formats}
         />
-        <Button onClick={HandleSave}>Save</Button>
     </div>);
 }
 

@@ -1,0 +1,15 @@
+.ql-container.ql-snow {
+    border: 1px solid gray !important;
+    margin: 0px 10px !important;
+
+    border-bottom-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.ql-toolbar.ql-snow {
+    border: 1px solid gray !important;
+    padding-right: 0px !important;
+    margin: 10px 10px !important;
+    border-top-right-radius: 10px !important;
+    border-top-left-radius: 10px !important;
+}
