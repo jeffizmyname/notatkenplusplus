@@ -4,6 +4,7 @@
 
     border-bottom-right-radius: 10px !important;
     border-bottom-left-radius: 10px !important;
+    min-height: 500px;
 }
 
 .ql-toolbar.ql-snow {
@@ -12,4 +13,18 @@
     margin: 10px 10px !important;
     border-top-right-radius: 10px !important;
     border-top-left-radius: 10px !important;
+}
+
+.ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: #fefefe;
+}
+
+.ql-toolbar .ql-fill {
+    fill: #fefefe;
+    stroke: none;
+}
+
+.ql-toolbar .ql-picker {
+    color: #fefefe;
 }

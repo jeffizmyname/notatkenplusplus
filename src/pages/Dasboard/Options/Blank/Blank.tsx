@@ -81,7 +81,7 @@ export default function MyComponent() {
     };
 
     return (
-    <div className="lg:mx-10 lg:my-5">
+    <div className="lg:mx-10 lg:my-5 overflow-scroll h-[90vh]">
         <EditorToolBar onSave={HandleSave}/>
         <ReactQuill 
         theme="snow"
