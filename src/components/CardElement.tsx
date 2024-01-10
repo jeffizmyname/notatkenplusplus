@@ -104,9 +104,9 @@ export const ModalDefaultContent: React.FC<ModalDefaultContentProps> = ({ handle
             <Button color="danger" variant="light" onPress={onClose}>
                 Close
             </Button>
-            <Button color="primary" variant="light" onPress={onClose}>
+            {/* <Button color="primary" variant="light" onPress={onClose}>
                 Share
-            </Button>
+            </Button> */}
             <Button color="primary" onPress={handleOpen}>
                 Open
             </Button>
