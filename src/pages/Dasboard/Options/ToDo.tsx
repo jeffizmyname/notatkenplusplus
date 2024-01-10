@@ -57,7 +57,7 @@ function ToDo() {
     };
 
     const handleDelete = (index: number) => {
-        setEntries((prevEntries) => prevEntries.filter((entry, i) => i !== index));
+        setEntries((prevEntries) => prevEntries.filter((_entry, i) => i !== index));
     };
     //!zamien na funkcje z saveLoad
     const HandleSave = () => {
