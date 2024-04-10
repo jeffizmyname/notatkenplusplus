@@ -8,9 +8,7 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
 
     -dodawnie do niego TODO 
 
-4.udostepnianie po kodzie zaczyanm
-5.tworzenie wykresow
-6.Prezcohowyanie plików
+
 7.upload avatara OK
 8.napraw dark mode lightmode lub usuń poprstu
 9.całe malownie trzeba zrobic
@@ -25,7 +23,7 @@ https://www.reactfileupload.com/ - to moze ale raczej nie nwm
     -w połowie dobrze
 13.menu zapisz eksportuj do notatek
 14.napraw usatwnia zeby dalo sie otworzyc z strony głównej OK
-15timestamp tworzenia edutowanie sortowanie po nazwie dacie 
+15timestamp tworzenia edutowanie 
 16.dokonc ustawienia newsletter OK
 17.responsywnosc strona dashbard
 
@@ -34,3 +32,22 @@ ewentuqlnie react dnd do zabawy
 pobieraj user data zawsze nie tylko przy login
 
 1 unique share code for each todo
+
+
+///////////////////////////////////////////////////////////////////////////// v 0.2
+
+1.pobieranie.
+    -notatek
+    -todo
+    -rysunkow
+    -wykresow
+
+2.sortowanie po nazwie dacie 
+3. dokonc zmiana hasla i usuwanie kontakt
+4.udostepnianie po kodzie
+5.tworzenie wykresow
+6.Prezcohowyanie plików
+7.malowanie
+https://konvajs.org/docs/index.html
+http://fabricjs.com/demos/
+8.wykresy
