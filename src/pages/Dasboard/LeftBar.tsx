@@ -9,8 +9,8 @@ export default function LeftBar() {
                 <div className="flex flex-col my-2 mx-5 gap-2">
                     <Link className="bg-gray-900 hover:bg-slate-900 px-4 py-2 rounded-md" href="/Dashboard/BlankFiles">Notatki</Link>
                     <Link className="bg-gray-900 hover:bg-slate-900 px-4 py-2 rounded-md" href="/Dashboard/ToDoFiles">Listy TODO</Link>
-                    {/* <Link href="/Dashboard/PaintFiles">Płutna</Link>
-                    <Link href="/Dashboard/ChartFiles">Wykresy</Link> */}
+                    <Link className="bg-gray-900 hover:bg-slate-900 px-4 py-2 rounded-md" href="/Dashboard/PaintFiles">Płutna</Link>
+                    <Link className="bg-gray-900 hover:bg-slate-900 px-4 py-2 rounded-md" href="/Dashboard/ChartFiles">Wykresy</Link>
                 </div>
         </div>
     )
