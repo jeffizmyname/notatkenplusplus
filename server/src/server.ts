@@ -244,7 +244,7 @@ app.get('/blank/:userId', (req: Request, res: Response) => {
             res.status(500).send(err)
         } else {
             res.status(200).json({ userData: results })
-        }
+        }   
     });
 })
 
