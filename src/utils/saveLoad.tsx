@@ -58,3 +58,32 @@ export async function handleSave(type: string, json: unknown, Data: TypeData | N
         console.error('Error:', error);
     }
 }
+
+interface Todo {
+    id: number;
+    user_id: number;
+    Name: string;
+    Author: string;
+    Description: string;
+    Data: Record<string, unknown> | null;
+}
+
+export const HandleDownload = async (id: number) => {
+    const userData = await getElements("todo", getId()!)
+    const resultObject = userData.find((item: Todo) => item.id === Number(id));
+
+    let data = "";
+    data += "opis: " + resultObject.Description + "\n autor: " + resultObject.Author + "\n\n";
+    JSON.parse(resultObject.Data).forEach((el: { task: string; isDone: string; }) => {
+        data += el.task + " - " + (el.isDone ? "zrobione" : "nie zrobione") + "\n"
+    });
+
+    const text = data
+    const element = document.createElement('a')
+    const file = new Blob([text], {type: 'text/plain'})
+    element.href = URL.createObjectURL(file)
+    element.download = resultObject.Name
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+}
