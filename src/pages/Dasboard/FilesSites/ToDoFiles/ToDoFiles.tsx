@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import OpenToDoTT from "./OpenToDoTT";
 import DeleteToDoTT from "./DeleteToDoTT";
+import DownloadToDoTT from "./DownloadToDoTT";
 
 interface TodoItem {
   id: number;
@@ -87,6 +88,7 @@ export default function ToDoFiles() {
         return (
           <div className="relative flex items-center gap-2">
             <OpenToDoTT id={todo.id}/>
+            <DownloadToDoTT id={todo.id}/>
             <DeleteToDoTT id={todo.id}/>
           </div>
         );
