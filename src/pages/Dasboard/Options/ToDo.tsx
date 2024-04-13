@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getId } from '../../../utils/userData';
 import { useParams } from 'react-router-dom';
-import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Input } from '@nextui-org/react';
-import { getElements, handleSave } from '../../../utils/saveLoad';
+import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Checkbox, Input, Spacer } from '@nextui-org/react';
+import { HandleDownload, getElements, handleSave } from '../../../utils/saveLoad';
 import { PlusIcon } from '../../../assets/icons/PlusIcon';
 
 interface Todo {
@@ -25,7 +25,6 @@ function ToDo() {
                 const userData = await getElements("todo", getId()!)
                 const resultObject = userData.find((item: Todo) => item.id === Number(TODOid.todoID));
                 setTodoData(resultObject);
-                console.log(userData)
                 if (resultObject && resultObject.Data) {
                     const unescapedString = resultObject.Data.replace(/\\"/g, '"');
                     const jsonArray = JSON.parse(unescapedString);
@@ -41,7 +40,6 @@ function ToDo() {
 
     function addField() {
         setEntries((prevEntries) => [...prevEntries, { isDone: false, task: '' }]);
-        console.log(entries)
     }
 
     const handleTaskChange = (index: number, value: string) => {
@@ -79,7 +77,11 @@ function ToDo() {
                         </CardBody>
                         <CardFooter className='flex flex-row justify-between'>
                             <p className='text-gray-500'>autor: {todoData.Author}</p>
-                            <Button onClick={HandleSave}>Zapisz</Button>
+                            <div className='flex flex-row'>
+                                <Button onClick={() => HandleDownload(Number(TODOid.todoID))}>Pobierz</Button>
+                                <Spacer x={4}/>
+                                <Button onClick={HandleSave}>Zapisz</Button>
+                            </div>
                         </CardFooter>
                     </Card>
                 )}
